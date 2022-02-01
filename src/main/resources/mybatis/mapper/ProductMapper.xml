@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mall.dao.ProductMapper">
+    <resultMap id="productMap" type="product">
+        <id property="product_id" column="product_id"/>
+        <result property="product_name" column="product_name"/>
+        <result property="product_brand" column="product_brand"/>
+        <result property="product_description" column="product_description"/>
+        <result property="product_price" column="product_price"/>
+        <result property="product_sale_price" column="product_sale_price"/>
+        <result property="product_inventory" column="product_inventory"/>
+        <result property="product_create_date" column="product_create_date"/>
+        <result property="product_isEnabled" column="product_isEnabled"/>
+        <result property="product_sale_count" column="product_sale_count"/>
+        <result property="product_review_count" column="product_review_count"/>
+        <association property="product_category" javaType="com.example.mall.entity.Category">
+            <id property="category_id" column="product_category_id"/>
+        </association>
+    </resultMap>
+    <!--搜索产品信息-->
+    <select id="select" resultMap="productMap">
+        SELECT
+        product_id,
+        product_name,
+        product_brand,
+        product_description,
+        product_price,
+        product_sale_price,
+        product_inventory,
+        product_create_date,
+        product_isEnabled,
+        product_category_id,
+        product_sale_count,
+        product_review_count
+        FROM product
+        <where>
+            <if test="product != null">
+                <if test="product.product_name != null">product_name LIKE concat('%',#{product.product_name},'%')</if>
+                <if test="product.product_price != null">and product_sale_price &lt;= #{product.product_price}</if>
+                <if test="product.product_sale_price != null">and product_sale_price &gt;= #{product.product_sale_price}</if>
+                <if test="product.product_category != null">
+                    <if test="product.product_category.category_id != null">and product_category_id =
+                        #{product.product_category.category_id}
+                    </if>
+                </if>
+            </if>
+            <if test="product_isEnabled_array != null">
+                and product_isEnabled IN
+                <foreach collection="product_isEnabled_array" index="index" item="item" open="(" separator=","
+                         close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="orderUtil != null">
+            ORDER BY ${orderUtil.orderBy}
+            <if test="orderUtil.isDesc">desc</if>
+        </if>
+        <if test="pageUtil != null">
+            LIMIT #{pageUtil.pageStart},#{pageUtil.count}
+        </if>
+    </select>
+</mapper>
