@@ -168,7 +168,6 @@ public class CategoryController extends BaseController {
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
         String fileName = UUID.randomUUID() + extension;
         String filePath = session.getServletContext().getRealPath("/") + "res/images/item/categoryPicture/" + fileName;
-
         logger.info("文件上传路径：{}", filePath);
         JSONObject object = new JSONObject();
         try {
