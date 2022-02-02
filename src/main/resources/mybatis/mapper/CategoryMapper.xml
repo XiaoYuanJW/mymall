@@ -9,7 +9,7 @@
             VALUES(
             null,
             #{category.category_name},
-            #{category.category_image_src}
+            #{category.category_image_src})
     </insert>
     <!--修改种类信息-->
     <update id="updateOne" parameterType="category">
