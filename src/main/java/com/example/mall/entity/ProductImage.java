@@ -11,7 +11,7 @@ public class ProductImage {
     /*产品图片路径*/
     private String productImage_src;
     /*产品图片对应产品*/
-    private Product productImage_product_id;
+    private Product productImage_product;
 
     @Override
     public String toString() {
@@ -19,7 +19,7 @@ public class ProductImage {
                 "productImage_id=" + productImage_id +
                 ", productImage_type=" + productImage_type +
                 ", productImage_src='" + productImage_src + '\'' +
-                ", productImage_product_id=" + productImage_product_id +
+                ", productImage_product_id=" + productImage_product +
                 '}';
     }
 
@@ -31,7 +31,7 @@ public class ProductImage {
         this.productImage_id = productImage_id;
         this.productImage_type = productImage_type;
         this.productImage_src = productImage_src;
-        this.productImage_product_id = productImage_product_id;
+        this.productImage_product = productImage_product;
     }
 
     public Integer getProductImage_id() {
@@ -62,11 +62,11 @@ public class ProductImage {
     }
 
     public Product getProductImage_product_id() {
-        return productImage_product_id;
+        return productImage_product;
     }
 
     public ProductImage setProductImage_product_id(Product productImage_product_id) {
-        this.productImage_product_id = productImage_product_id;
+        this.productImage_product = productImage_product_id;
         return this;
     }
 }

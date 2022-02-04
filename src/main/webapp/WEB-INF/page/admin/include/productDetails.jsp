@@ -281,41 +281,41 @@
             $("#btn_product_cancel").click(function () {
                 $(".menu_li[data-toggle=product]").click();
             });
-            //更改产品类型列表时
-            $("#select_product_category").change(function () {
-                $.ajax({
-                    url: "admin/property/type/"+$(this).val(),
-                    type: "get",
-                    data: null,
-                    success: function (data) {
-                        $(".loader").css("display", "none");
-                        //清空原有数据
-                        var listDiv = $(".details_property_list");
-                        listDiv.empty().append("<span class='details_title text_info'>属性值信息</span>");
-                        //显示产品属性数据
-                        if(data.propertyList.length > 0){
-                            for(var i = 0;i<data.propertyList.length;i++){
-                                var propertyId = data.propertyList[i].property_id;
-                                var propertyName = data.propertyList[i].property_name;
-                                if(data.propertyList[i+1] !== undefined){
-                                    var nextPropertyId = data.propertyList[i+1].property_id;
-                                    var nextPropertyName = data.propertyList[i+1].property_name;
-                                    i++;
-                                    listDiv.append("<label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + propertyId + "' for='input_product_property_" + propertyId + "'>" + propertyName + "</label><input class='frm_input' id='input_product_property_" + propertyId + "' type='text' maxlength='50'/><label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + nextPropertyId + "' for='input_product_property_" + nextPropertyId + "'>" + nextPropertyName + "</label><input class='frm_input' id='input_product_property_" + nextPropertyId + "' type='text' maxlength='50'/><div class='br'></div>");
-                                } else {
-                                    listDiv.append("<label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + propertyId + "' for='input_product_property_" + propertyId + "'>" + propertyName + "</label><input class='frm_input' id='input_product_property_" + propertyId + "' type='text' maxlength='50'/><div class='br'></div>");
-                                }
-                            }
-                        }
-                    },
-                    beforeSend: function () {
-                        $(".loader").css("display", "block");
-                    },
-                    error: function () {
-
-                    }
-                });
-            });
+            // //更改产品类型列表时
+            // $("#select_product_category").change(function () {
+            //     $.ajax({
+            //         url: "admin/property/type/"+$(this).val(),
+            //         type: "get",
+            //         data: null,
+            //         success: function (data) {
+            //             $(".loader").css("display", "none");
+            //             //清空原有数据
+            //             var listDiv = $(".details_property_list");
+            //             listDiv.empty().append("<span class='details_title text_info'>属性值信息</span>");
+            //             //显示产品属性数据
+            //             if(data.propertyList.length > 0){
+            //                 for(var i = 0;i<data.propertyList.length;i++){
+            //                     var propertyId = data.propertyList[i].property_id;
+            //                     var propertyName = data.propertyList[i].property_name;
+            //                     if(data.propertyList[i+1] !== undefined){
+            //                         var nextPropertyId = data.propertyList[i+1].property_id;
+            //                         var nextPropertyName = data.propertyList[i+1].property_name;
+            //                         i++;
+            //                         listDiv.append("<label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + propertyId + "' for='input_product_property_" + propertyId + "'>" + propertyName + "</label><input class='frm_input' id='input_product_property_" + propertyId + "' type='text' maxlength='50'/><label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + nextPropertyId + "' for='input_product_property_" + nextPropertyId + "'>" + nextPropertyName + "</label><input class='frm_input' id='input_product_property_" + nextPropertyId + "' type='text' maxlength='50'/><div class='br'></div>");
+            //                     } else {
+            //                         listDiv.append("<label class='frm_label lbl_property_name text_info' id='lbl_product_property_" + propertyId + "' for='input_product_property_" + propertyId + "'>" + propertyName + "</label><input class='frm_input' id='input_product_property_" + propertyId + "' type='text' maxlength='50'/><div class='br'></div>");
+            //                     }
+            //                 }
+            //             }
+            //         },
+            //         beforeSend: function () {
+            //             $(".loader").css("display", "block");
+            //         },
+            //         error: function () {
+            //
+            //         }
+            //     });
+            // });
             //获取到输入框焦点时
             $("input:text").focus(function () {
                 styleUtil.basicErrorHide($(this).prev("label"));
@@ -466,7 +466,6 @@
         <label class="frm_label text_info" id="lbl_product_isEnabled_true" for="radio_product_isEnabled_true">销售中</label>
         <input id="radio_product_isEnabled_false" name="radio_product_isEnabled" type="radio" value="1">
         <label class="frm_label text_info" id="lbl_product_isEnabled_false" for="radio_product_isEnabled_false">停售中</label>
-        <input id="radio_product_isEnabled_special" name="radio_product_isEnabled" type="radio" value="0">
     </div>
 </div>
 <div class="details_div">

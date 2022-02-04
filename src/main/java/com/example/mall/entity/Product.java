@@ -1,7 +1,9 @@
 package com.example.mall.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 产品实体类
@@ -26,7 +28,7 @@ public class Product {
     /*产品对应类型*/
     private Category product_category;
     /*产品状态*/
-    private Enum product_isEnabled;
+    private Byte product_isEnabled;
     /*销量数*/
     private Integer product_sale_count;
     /*评价数*/
@@ -56,7 +58,7 @@ public class Product {
                 '}';
     }
 
-    public Product(Integer product_id, String product_name, String product_brand, String product_description, Double product_price, Double product_sale_price, int product_inventory, Date product_create_date, Category product_category, Enum product_isEnabled, Integer product_sale_count, Integer product_review_count, List<ProductImage> singleProductImageList, List<ProductImage> detailProductImageList) {
+    public Product(Integer product_id, String product_name, String product_brand, String product_description, Double product_price, Double product_sale_price, int product_inventory, Date product_create_date, Category product_category, Byte product_isEnabled, Integer product_sale_count, Integer product_review_count, List<ProductImage> singleProductImageList, List<ProductImage> detailProductImageList) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_brand = product_brand;
@@ -140,8 +142,12 @@ public class Product {
         return this;
     }
 
-    public Date getProduct_create_date() {
-        return product_create_date;
+    public String getProduct_create_date() {
+        if(product_create_date != null){
+            SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+            return time.format(product_create_date);
+        }
+        return null;
     }
 
     public Product setProduct_create_date(Date product_create_date) {
@@ -158,11 +164,11 @@ public class Product {
         return this;
     }
 
-    public Enum getProduct_isEnabled() {
+    public Byte getProduct_isEnabled() {
         return product_isEnabled;
     }
 
-    public Product setProduct_isEnabled(Enum product_isEnabled) {
+    public Product setProduct_isEnabled(Byte product_isEnabled) {
         this.product_isEnabled = product_isEnabled;
         return this;
     }

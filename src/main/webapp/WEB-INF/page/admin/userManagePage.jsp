@@ -97,10 +97,10 @@
                             var user_id = data.userList[i].user_id;
                             var user_name = data.userList[i].user_name;
                             var user_nickname = data.userList[i].user_nickname;
-                            var user_realname = data.userList[i].user_realname;
+                            var user_phone = data.userList[i].user_phone;
                             var user_birthday = data.userList[i].user_birthday;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden  class='user_id'>" + user_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_phone + "'>" + user_phone + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden  class='user_id'>" + user_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -195,8 +195,8 @@
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="user_realname">
-                <span>姓名</span>
+            <th class="data_info" data-sort="asc" data-name="user_phone">
+                <span>电话</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
@@ -220,7 +220,7 @@
                 <td><input type="checkbox" class="cbx_select" id="cbx_user_select_${user.user_id}"><label for="cbx_user_select_${user.user_id}"></label></td>
                 <td title="${user.user_name}">${user.user_name}</td>
                 <td title="${user.user_nickname}">${user.user_nickname}</td>
-                <td title="${user.user_realname}">${user.user_realname}</td>
+                <td title="${user.user_phone}">${user.user_phone}</td>
                 <td title="${user.user_birthday}">${user.user_birthday}</td>
                 <td>
                     <c:choose>

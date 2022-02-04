@@ -40,4 +40,32 @@ public interface ProductMapper {
      * @return
      */
     Product selectOne(@Param("product_id") Integer product_Id);
+
+    /**
+     * 总计
+     * @param product
+     * @param product_isEnabled_array
+     * @return
+     */
+    Integer selectTotal(@Param("product") Product product,@Param("product_isEnabled_array") Byte[] product_isEnabled_array);
+
+    /**
+     * 按组合条件查询商品列表
+     * @param product
+     * @param bytes
+     * @param orderUtil
+     * @param pageUtil
+     * @param product_name_split
+     * @return
+     */
+    List<Product> selectMoreList(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] bytes, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil, @Param("product_name_split") String[] product_name_split);
+
+    /**
+     * 按组合条件查询商品总数量
+     * @param product
+     * @param product_isEnabled_array
+     * @param product_name_split
+     * @return
+     */
+    Integer selectMoreListTotal(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("product_name_split") String[] product_name_split);
 }
