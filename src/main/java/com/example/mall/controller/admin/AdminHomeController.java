@@ -40,4 +40,24 @@ public class AdminHomeController extends BaseController {
         return "admin/homePage";
     }
 
+    /**
+     * 转到后台管理-主页-ByAjax
+     * @param session
+     * @param map
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "admin/home", method = RequestMethod.GET)
+    public String goToPageByAjax(HttpSession session, Map<String, Object> map) throws ParseException {
+        logger.info("获取管理员信息");
+        Object adminId = checkAdmin(session);
+        if (adminId == null) {
+            return "admin/include/loginMessage";
+        }
+        Admin admin = adminService.get(null, Integer.parseInt(adminId.toString()));
+        map.put("admin", admin);
+        logger.info("转到后台管理-主页");
+        return "admin/homeManagePage";
+    }
+
 }

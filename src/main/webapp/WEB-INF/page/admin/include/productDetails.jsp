@@ -45,28 +45,28 @@
                         styleUtil.basicErrorShow($("#lbl_product_sale_price"));
                         yn = false;
                     }
-                    if(product_product_description === "" || isNaN(product_product_description)){
-                        styleUtil.basicErrorShow($("#lbl_product_product_description"));
+                    if(product_description === ""){
+                        styleUtil.basicErrorShow($("#lbl_product_description"));
                         yn = false;
                     }
-                    if(product_product_inventory === "" || isNaN(product_product_inventory)){
-                        styleUtil.basicErrorShow($("#lbl_product_product_inventory"));
+                    if(product_inventory === "" || isNaN(product_inventory)){
+                        styleUtil.basicErrorShow($("#lbl_product_inventory"));
                         yn = false;
                     }
                     if(!yn){
                         return;
                     }
 
-                    //产品属性Map
-                    var propertyMap = {};
-                    $("input[id^='input_product_property']").each(function () {
-                        var value = $.trim($(this).val());
-                        if (value === "") {
-                            return true;
-                        }
-                        var key = $(this).attr("id").substring($(this).attr("id").lastIndexOf('_') + 1);
-                        propertyMap[key] = value;
-                    });
+                    // //产品属性Map
+                    // var propertyMap = {};
+                    // $("input[id^='input_product_property']").each(function () {
+                    //     var value = $.trim($(this).val());
+                    //     if (value === "") {
+                    //         return true;
+                    //     }
+                    //     var key = $(this).attr("id").substring($(this).attr("id").lastIndexOf('_') + 1);
+                    //     propertyMap[key] = value;
+                    // });
 
                     //产品图片List
                     var productSingleImageList = [];
@@ -94,7 +94,7 @@
                         "product_sale_price": product_sale_price,
                         "product_description": product_description,
                         "product_inventory": product_inventory,
-                        "propertyJson": JSON.stringify(propertyMap),
+                        // "propertyJson": JSON.stringify(propertyMap),
                         "productSingleImageList": productSingleImageList,
                         "productDetailsImageList": productDetailsImageList
                     };
@@ -122,11 +122,11 @@
                 checkFileUpload($("#product_single_list"),5);
                 checkFileUpload($("#product_details_list"),8);
                 //原属性值Map
-                var propertyMap = {};
-                $("input[id^='input_product_property'][data-pvid]").each(function () {
-                    var value_id = $(this).attr("data-pvid");
-                    propertyMap[value_id] = $(this).val();
-                });
+                // var propertyMap = {};
+                // $("input[id^='input_product_property'][data-pvid]").each(function () {
+                //     var value_id = $(this).attr("data-pvid");
+                //     propertyMap[value_id] = $(this).val();
+                // });
 
                 /******
                  * event
@@ -140,6 +140,8 @@
                     var product_brand = $.trim($("#input_product_brand").val());
                     var product_price = $.trim($("#input_product_price").val());
                     var product_sale_price = $.trim($("#input_product_sale_price").val());
+                    var product_description = $.trim($("#input_product_description").val());
+                    var product_inventory = $.trim($("#input_product_inventory").val());
 
                     //校验数据合法性
                     var yn = true;
@@ -163,34 +165,42 @@
                         styleUtil.basicErrorShow($("#lbl_product_sale_price"));
                         yn = false;
                     }
+                    if(product_description === ""){
+                        styleUtil.basicErrorShow($("#lbl_product_description"));
+                        yn = false;
+                    }
+                    if(product_inventory === "" || isNaN(product_inventory)){
+                        styleUtil.basicErrorShow($("#lbl_product_inventory"));
+                        yn = false;
+                    }
                     if (!yn) {
                         return;
                     }
 
                     //产品属性Map
-                    var propertyAddMap = {};
-                    var propertyUpdateMap = {};
-                    var propertyDeleteList = [];
-                    //获取需要更新或删除的产品属性
-                    $("input[id^=input_product_property][data-pvid]").each(function () {
-                        var value_id = $(this).attr("data-pvid");
-                        var value = $.trim($(this).val());
-                        if (value === "") {
-                            propertyDeleteList.push(value_id);
-                        } else if (propertyMap[value_id] !== value) {
-                            propertyUpdateMap[value_id] = value;
-                        }
-                    });
+                    // var propertyAddMap = {};
+                    // var propertyUpdateMap = {};
+                    // var propertyDeleteList = [];
+                    // //获取需要更新或删除的产品属性
+                    // $("input[id^=input_product_property][data-pvid]").each(function () {
+                    //     var value_id = $(this).attr("data-pvid");
+                    //     var value = $.trim($(this).val());
+                    //     if (value === "") {
+                    //         propertyDeleteList.push(value_id);
+                    //     } else if (propertyMap[value_id] !== value) {
+                    //         propertyUpdateMap[value_id] = value;
+                    //     }
+                    // });
                     //获取需要添加的产品属性
-                    $("input[id^=input_product_property]:not([data-pvid])").each(function () {
-                        var value = $.trim($(this).val());
-                        if (value === "") {
-                            return true;
-                        } else {
-                            var key = $(this).attr("id").substring($(this).attr("id").lastIndexOf('_') + 1);
-                            propertyAddMap[key] = value;
-                        }
-                    });
+                    // $("input[id^=input_product_property]:not([data-pvid])").each(function () {
+                    //     var value = $.trim($(this).val());
+                    //     if (value === "") {
+                    //         return true;
+                    //     } else {
+                    //         var key = $(this).attr("id").substring($(this).attr("id").lastIndexOf('_') + 1);
+                    //         propertyAddMap[key] = value;
+                    //     }
+                    // });
 
                     //产品图片List
                     var productSingleImageList = [];
@@ -216,9 +226,11 @@
                         "product_brand": product_brand,
                         "product_price": product_price,
                         "product_sale_price": product_sale_price,
-                        "propertyAddJson": JSON.stringify(propertyAddMap),
-                        "propertyUpdateJson": JSON.stringify(propertyUpdateMap),
-                        "propertyDeleteList": propertyDeleteList,
+                        "product_description":  product_description,
+                        "product_inventory": product_inventory,
+                        // "propertyAddJson": JSON.stringify(propertyAddMap),
+                        // "propertyUpdateJson": JSON.stringify(propertyUpdateMap),
+                        // "propertyDeleteList": propertyDeleteList,
                         "productSingleImageList": productSingleImageList,
                         "productDetailsImageList": productDetailsImageList
                     };
@@ -281,7 +293,7 @@
             $("#btn_product_cancel").click(function () {
                 $(".menu_li[data-toggle=product]").click();
             });
-            // //更改产品类型列表时
+            //更改产品类型列表时
             // $("#select_product_category").change(function () {
             //     $.ajax({
             //         url: "admin/property/type/"+$(this).val(),
@@ -466,6 +478,9 @@
         <label class="frm_label text_info" id="lbl_product_isEnabled_true" for="radio_product_isEnabled_true">销售中</label>
         <input id="radio_product_isEnabled_false" name="radio_product_isEnabled" type="radio" value="1">
         <label class="frm_label text_info" id="lbl_product_isEnabled_false" for="radio_product_isEnabled_false">停售中</label>
+<%--        <input id="radio_product_isEnabled_special" name="radio_product_isEnabled" type="radio" value="2">--%>
+<%--        <label class="frm_label text_info" id="lbl_product_isEnabled_special" for="radio_product_isEnabled_special">促销中</label>--%>
+        <span class="frm_error_msg" id="text_productState_details_msg"></span>
     </div>
 </div>
 <div class="details_div">
@@ -486,7 +501,7 @@
         <label class="frm_label text_info" id="lbl_product_price" for="input_product_price">产品原价</label>
         <input class="frm_input details_unit"  id="input_product_price" type="text" maxlength="10" value="${requestScope.product.product_price}"/>
         <span class="details_unit text_info">元</span>
-        <label class="frm_label text_info" id="lbl_product_sale_price" for="input_product_sale_price">产品售格</label>
+        <label class="frm_label text_info" id="lbl_product_sale_price" for="input_product_sale_price">产品售价</label>
         <input class="frm_input details_unit"  id="input_product_sale_price" type="text" maxlength="10" value="${requestScope.product.product_sale_price}"/>
         <span class="details_unit text_info">元</span>
     </div>

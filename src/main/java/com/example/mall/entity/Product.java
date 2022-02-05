@@ -22,7 +22,7 @@ public class Product {
     /*产品促销价格*/
     private Double product_sale_price;
     /*产品库存*/
-    private int product_inventory;
+    private Integer product_inventory;
     /*产品创建日期*/
     private Date product_create_date;
     /*产品对应类型*/
@@ -58,7 +58,7 @@ public class Product {
                 '}';
     }
 
-    public Product(Integer product_id, String product_name, String product_brand, String product_description, Double product_price, Double product_sale_price, int product_inventory, Date product_create_date, Category product_category, Byte product_isEnabled, Integer product_sale_count, Integer product_review_count, List<ProductImage> singleProductImageList, List<ProductImage> detailProductImageList) {
+    public Product(Integer product_id, String product_name, String product_brand, String product_description, Double product_price, Double product_sale_price, Integer product_inventory, Date product_create_date, Category product_category, Byte product_isEnabled, Integer product_sale_count, Integer product_review_count, List<ProductImage> singleProductImageList, List<ProductImage> detailProductImageList) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_brand = product_brand;
@@ -133,11 +133,11 @@ public class Product {
         return this;
     }
 
-    public int getProduct_inventory() {
+    public Integer getProduct_inventory() {
         return product_inventory;
     }
 
-    public Product setProduct_inventory(int product_inventory) {
+    public Product setProduct_inventory(Integer product_inventory) {
         this.product_inventory = product_inventory;
         return this;
     }

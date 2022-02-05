@@ -61,12 +61,12 @@ public class ProductImage {
         return this;
     }
 
-    public Product getProductImage_product_id() {
+    public Product getProductImage_product() {
         return productImage_product;
     }
 
-    public ProductImage setProductImage_product_id(Product productImage_product_id) {
-        this.productImage_product = productImage_product_id;
+    public ProductImage setProductImage_product(Product productImage_product) {
+        this.productImage_product = productImage_product;
         return this;
     }
 }
