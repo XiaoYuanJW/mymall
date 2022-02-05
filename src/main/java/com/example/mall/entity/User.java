@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 用户实体类
+ */
 public class User {
     /*用户ID*/
     private Integer user_id;

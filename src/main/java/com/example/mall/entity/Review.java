@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * 评论实体类
+ */
 public class Review {
     /*评论ID*/
     private Integer review_id;

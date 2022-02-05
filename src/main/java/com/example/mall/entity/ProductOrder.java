@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * 订单实体类
+ */
 public class ProductOrder {
     /*订单ID*/
     private Integer order_id;

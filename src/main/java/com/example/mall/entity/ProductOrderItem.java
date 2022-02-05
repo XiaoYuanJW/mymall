@@ -1,5 +1,8 @@
 package com.example.mall.entity;
 
+/**
+ * 订单项实体类
+ */
 public class ProductOrderItem {
     /*订单项ID*/
     private Integer orderItem_id;
