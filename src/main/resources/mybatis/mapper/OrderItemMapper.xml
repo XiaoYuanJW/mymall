@@ -8,24 +8,24 @@
         <result property="orderItem_number" column="orderItem_number"/>
         <result property="orderItem_price" column="orderItem_price"/>
         <association property="orderItem_product" javaType="com.example.mall.entity.Product">
-            <id property="product_id" column="order_product_id"/>
+            <id property="product_id" column="orderItem_product_id"/>
         </association>
-        <association property="OrderItem_order" javaType="com.example.mall.entity.Order">
+        <association property="orderItem_order" javaType="com.example.mall.entity.Order">
             <id property="order_id" column="orderItem_order_id"/>
         </association>
-        <association property="OrderItem_user" javaType="com.example.mall.entity.User">
+        <association property="orderItem_user" javaType="com.example.mall.entity.User">
             <id property="user_id" column="orderItem_user_id"/>
         </association>
     </resultMap>
     <!--添加订单项-->
     <insert id="insertOne" parameterType="orderItem">
         INSERT orderItem
-        (orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id)
+        (orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id)
         VALUES (
         null,
         #{orderItem.orderItem_number},
         #{orderItem.orderItem_price},
-        #{orderItem.order_product_id},
+        #{orderItem.orderItem_product_id},
         #{orderItem.orderItem_order_id},
         #{orderItem.orderItem_user_id})
     </insert>
@@ -63,7 +63,7 @@
     <!--查询订单项列表-->
     <select id="select" parameterType="com.example.mall.util.PageUtil" resultMap="orderItemMap">
         SELECT
-        orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id
+        orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id
         FROM orderItem
         <if test="pageUtil != null">
             LIMIT #{pageUtil.index},#{pageUtil.count}
@@ -72,7 +72,7 @@
     <!--订单id查询订单项-->
     <select id="selectByOrderId" resultMap="orderItemMap">
         SELECT
-        orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id
+        orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id
         FROM orderItem
         <where>
             orderItem_order_id = #{order_id}
@@ -84,7 +84,7 @@
     <!--用户id查询订单项-->
     <select id="selectByUserId" resultMap="orderItemMap">
         SELECT
-        orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id
+        orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id
         FROM orderItem
         <where>
             orderItem_user_id = #{user_id} and orderItem_order_id is null
@@ -96,7 +96,7 @@
     <!--产品id查询订单项-->
     <select id="selectByProductId" resultMap="orderItemMap">
         SELECT
-        orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id
+        orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id
         FROM orderItem
         <where>
             orderItem_product_id = #{product_id}
@@ -108,7 +108,7 @@
     <!--订单项id查询订单项-->
     <select id="selectOne" resultMap="orderItemMap" parameterType="int">
         SELECT
-        orderItem_id,orderItem_number,orderItem_price,order_product_id,orderItem_order_id,orderItem_user_id
+        orderItem_id,orderItem_number,orderItem_price,orderItem_product_id,orderItem_order_id,orderItem_user_id
         FROM orderItem
         <where>
             orderItem_id = #{orderItem_id}
