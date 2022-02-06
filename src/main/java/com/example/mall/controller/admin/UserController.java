@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mall.controller.BaseController;
-import com.example.mall.entity.ProductOrderItem;
 import com.example.mall.entity.User;
 import com.example.mall.service.UserService;
 import com.example.mall.util.OrderUtil;
@@ -18,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 /**
  * 后台管理-用户页

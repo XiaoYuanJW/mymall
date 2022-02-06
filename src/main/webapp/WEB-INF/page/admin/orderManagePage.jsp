@@ -5,9 +5,8 @@
     <script>
         //检索数据集
         var dataList = {
-            "productOrder_code": null,
-            "productOrder_post": null,
-            "productOrder_status_array": null,
+            "order_code": null,
+            "order_status_array": null,
             "orderBy": null,
             "isDesc": true
         };
@@ -16,47 +15,41 @@
              * event
              ******/
             //点击查询按钮时
-            $("#btn_productOrder_submit").click(function () {
-                var productOrder_code = $.trim($("#input_productOrder_code").val());
-                var productOrder_post = $.trim($("#input_productOrder_post").val());
+            $("#btn_order_submit").click(function () {
+                var order_code = $.trim($("#input_order_code").val());
                 //订单状态数组
-                var productOrder_status_array = [];
-                $(".radio_productOrder_status:checked").each(function () {
-                    productOrder_status_array.push($(this).val());
+                var order_status_array = [];
+                $(".radio_order_status:checked").each(function () {
+                    order_status_array.push($(this).val());
                 });
                 //校验数据合法性
-                if(isNaN(productOrder_code)){
-                    styleUtil.errorShow($('#text_productOrder_msg'),"订单号输入格式有误！");
-                    return;
-                } else if(isNaN(productOrder_post)){
-                    styleUtil.errorShow($('#text_productOrder_msg'),"邮政编码输入格式有误！");
+                if(isNaN(order_code)){
+                    styleUtil.errorShow($('#text_order_msg'),"订单号输入格式有误！");
                     return;
                 }
                 //封装数据
-                dataList.productOrder_code = productOrder_code.toString();
-                dataList.productOrder_post = productOrder_post.toString();
-                dataList.productOrder_status_array = productOrder_status_array;
+                dataList.order_code = order_code.toString();
+                dataList.order_status_array = order_status_array;
 
                 getData($(this), "admin/order/0/10", dataList);
             });
             //点击刷新按钮时
-            $("#btn_productOrder_refresh").click(function () {
+            $("#btn_order_refresh").click(function () {
                 //清除数据
-                dataList.productOrder_code = null;
-                dataList.productOrder_post = null;
-                dataList.productOrder_status_array = null;
+                dataList.order_code = null;
+                dataList.order_status_array = null;
                 dataList.orderBy = null;
                 dataList.isDesc = true;
                 //获取数据
                 getData($(this), "admin/order/0/10", null);
                 //清除排序样式
-                var table = $("#table_productOrder_list");
+                var table = $("#table_order_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 table.find("th.data_info").attr("data-sort","asc");
             });
             //点击th排序时
             $("th.data_info").click(function () {
-                var table = $("#table_productOrder_list");
+                var table = $("#table_order_list");
                 if(table.find(">tbody>tr").length <= 1){
                     return;
                 }
@@ -77,13 +70,13 @@
                 }
             });
             //点击table中的数据时
-            $("#table_productOrder_list").find(">tbody>tr").click(function () {
+            $("#table_order_list").find(">tbody>tr").click(function () {
                 trDataStyle($(this));
             });
         });
         //获取订单数据
         function getData(object,url,dataObject) {
-            var table = $("#table_productOrder_list");
+            var table = $("#table_order_list");
             var tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
@@ -97,47 +90,47 @@
                     $(".loader").css("display","none");
                     object.attr("disabled",false);
                     //显示订单统计数据
-                    $("#productOrder_count_data").text(data.productOrderCount);
-                    if (data.productOrderList.length > 0) {
-                        for (var i = 0; i < data.productOrderList.length; i++) {
-                            var productOrderStatusClass;
-                            var productOrderStatusTitle;
-                            var productOrderStatus;
-                            switch (data.productOrderList[i].productOrder_status) {
+                    $("#order_count_data").text(data.orderCount);
+                    if (data.orderList.length > 0) {
+                        for (var i = 0; i < data.orderList.length; i++) {
+                            var orderStatusClass;
+                            var orderStatusTitle;
+                            var orderStatus;
+                            switch (data.orderList[i].order_status) {
                                 case 0:
-                                    productOrderStatusClass = "td_await";
-                                    productOrderStatusTitle = "等待买家付款";
-                                    productOrderStatus = "等待买家付款";
+                                    orderStatusClass = "td_await";
+                                    orderStatusTitle = "等待买家付款";
+                                    orderStatus = "等待买家付款";
                                     break;
                                 case 1:
-                                    productOrderStatusClass = "td_warn";
-                                    productOrderStatusTitle = "买家已付款，等待卖家发货";
-                                    productOrderStatus = "等待卖家发货";
+                                    orderStatusClass = "td_warn";
+                                    orderStatusTitle = "买家已付款，等待卖家发货";
+                                    orderStatus = "等待卖家发货";
                                     break;
                                 case 2:
-                                    productOrderStatusClass = "td_wait";
-                                    productOrderStatusTitle = "卖家已发货，等待买家确认";
-                                    productOrderStatus = "等待买家确认";
+                                    orderStatusClass = "td_wait";
+                                    orderStatusTitle = "卖家已发货，等待买家确认";
+                                    orderStatus = "等待买家确认";
                                     break;
                                 case 3:
-                                    productOrderStatusClass = "td_success";
-                                    productOrderStatusTitle = "交易成功";
-                                    productOrderStatus = "交易成功";
+                                    orderStatusClass = "td_success";
+                                    orderStatusTitle = "交易成功";
+                                    orderStatus = "交易成功";
                                     break;
                                 default:
-                                    productOrderStatusClass = "td_error";
-                                    productOrderStatusTitle = "交易关闭";
-                                    productOrderStatus = "交易关闭";
+                                    orderStatusClass = "td_error";
+                                    orderStatusTitle = "交易关闭";
+                                    orderStatus = "交易关闭";
                                     break;
                             }
-                            var productOrder_id = data.productOrderList[i].productOrder_id;
-                            var productOrder_code = data.productOrderList[i].productOrder_code;
-                            var productOrder_post = data.productOrderList[i].productOrder_post;
-                            var productOrder_receiver = data.productOrderList[i].productOrder_receiver;
-                            var productOrder_mobile = data.productOrderList[i].productOrder_mobile;
-                            var productOrder_userMessage = data.productOrderList[i].productOrder_userMessage;
+                            var order_id = data.orderList[i].order_id;
+                            var order_code = data.orderList[i].order_code;
+                            var order_address = data.orderList[i].order_address;
+                            var order_receiver = data.orderList[i].order_receiver;
+                            var order_phone = data.orderList[i].order_phone;
+                            var order_userMessage = data.orderList[i].order_userMessage;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_order_select_" + order_id + "'><label for='cbx_order_select_" + order_id + "'></label></td><td title='" + order_code + "'>" + order_code + "</td><td title='" + order_address + "'>" + order_address + "</td><td title='" + order_receiver + "'>" + order_receiver + "</td><td title='" + order_phone + "'>" + order_phone + "</td><td><span class='" + orderStatusClass + "' title= '" + orderStatusTitle + "'>" + orderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + order_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -178,7 +171,7 @@
         }
     </script>
     <style rel="stylesheet">
-        #text_productOrder_msg{
+        #text_order_msg{
             margin-left: 10px;
         }
     </style>
@@ -186,29 +179,27 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_productOrder_code" for="input_productOrder_code">订单号</label>
-        <input class="frm_input" id="input_productOrder_code" type="text" maxlength="20"/>
-        <label class="frm_label" id="lbl_productOrder_post" for="input_productOrder_post">邮政编码</label>
-        <input class="frm_input" id="input_productOrder_post" type="text" maxlength="6"/>
-        <input class="frm_btn" id="btn_productOrder_submit" type="button" value="查询"/>
+        <label class="frm_label" id="lbl_order_code" for="input_order_code">订单号</label>
+        <input class="frm_input" id="input_order_code" type="text" maxlength="20"/>
+        <input class="frm_btn" id="btn_order_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
     <div class="frm_group">
-        <label class="frm_label" id="lbl_productOrder_status" for="checkbox_productOrder_status_waitPay">订单状态</label>
-        <input class="frm_radio radio_productOrder_status" id="checkbox_productOrder_status_waitPay" name="checkbox_productOrder_status" type="checkbox" value="0" checked>
-        <label class="frm_label" id="lbl_productOrder_status_waitPay" for="checkbox_productOrder_status_waitPay" title="等待买家付款">待付款</label>
-        <input class="frm_radio radio_productOrder_status" id="checkbox_productOrder_status_waitDelivery" name="checkbox_productOrder_status" type="checkbox" value="1" checked>
-        <label class="frm_label" id="lbl_productOrder_status_waitDelivery" for="checkbox_productOrder_status_waitDelivery" title="买家已付款，等待卖家发货">待发货</label>
-        <input class="frm_radio radio_productOrder_status" id="checkbox_productOrder_status_waitConfirm" name="checkbox_productOrder_status" type="checkbox" value="2" checked>
-        <label class="frm_label" id="lbl_productOrder_status_waitConfirm" for="checkbox_productOrder_status_waitConfirm" title="卖家已发货，等待买家确认">待确认</label>
-        <input class="frm_radio radio_productOrder_status" id="checkbox_productOrder_status_success" name="checkbox_productOrder_status" type="checkbox" value="3" checked>
-        <label class="frm_label" id="lbl_productOrder_status_success" for="checkbox_productOrder_status_success" title="交易成功">交易成功</label>
-        <input class="frm_radio radio_productOrder_status" id="checkbox_productOrder_status_close" name="checkbox_productOrder_status" type="checkbox" value="4" checked>
-        <label class="frm_label" id="lbl_productOrder_status_close" for="checkbox_productOrder_status_close" title="交易关闭">交易关闭</label>
-        <span class="frm_error_msg" id="text_productOrder_msg"></span>
+        <label class="frm_label" id="lbl_order_status" for="checkbox_order_status_waitPay">订单状态</label>
+        <input class="frm_radio radio_order_status" id="checkbox_order_status_waitPay" name="checkbox_order_status" type="checkbox" value="0" checked>
+        <label class="frm_label" id="lbl_order_status_waitPay" for="checkbox_order_status_waitPay" title="等待买家付款">待付款</label>
+        <input class="frm_radio radio_order_status" id="checkbox_order_status_waitDelivery" name="checkbox_order_status" type="checkbox" value="1" checked>
+        <label class="frm_label" id="lbl_order_status_waitDelivery" for="checkbox_order_status_waitDelivery" title="买家已付款，等待卖家发货">待发货</label>
+        <input class="frm_radio radio_order_status" id="checkbox_order_status_waitConfirm" name="checkbox_order_status" type="checkbox" value="2" checked>
+        <label class="frm_label" id="lbl_order_status_waitConfirm" for="checkbox_order_status_waitConfirm" title="卖家已发货，等待买家确认">待确认</label>
+        <input class="frm_radio radio_order_status" id="checkbox_order_status_success" name="checkbox_order_status" type="checkbox" value="3" checked>
+        <label class="frm_label" id="lbl_order_status_success" for="checkbox_order_status_success" title="交易成功">交易成功</label>
+        <input class="frm_radio radio_order_status" id="checkbox_order_status_close" name="checkbox_order_status" type="checkbox" value="4" checked>
+        <label class="frm_label" id="lbl_order_status_close" for="checkbox_order_status_close" title="交易关闭">交易关闭</label>
+        <span class="frm_error_msg" id="text_order_msg"></span>
     </div>
     <div class="frm_group_last">
-        <input class="frm_btn frm_refresh" id="btn_productOrder_refresh" type="button" value="刷新订单列表"/>
+        <input class="frm_btn frm_refresh" id="btn_order_refresh" type="button" value="刷新订单列表"/>
     </div>
 </div>
 <div class="data_count_div text_info">
@@ -223,66 +214,62 @@
     </svg>
     <span class="data_count_title">查看合计</span>
     <span>订单总数:</span>
-    <span class="data_count_value" id="productOrder_count_data">${requestScope.productOrderCount}</span>
+    <span class="data_count_value" id="order_count_data">${requestScope.orderCount}</span>
     <span class="data_count_unit">个</span>
 </div>
 <div class="table_normal_div">
-    <table class="table_normal" id="table_productOrder_list">
-    <thead class="text_info">
-    <tr>
-        <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
-        <th class="data_info" data-sort="asc" data-name="productOrder_code">
-            <span>订单号</span>
-            <span class="orderByDesc"></span>
-            <span class="orderByAsc orderBySelect"></span>
-        </th>
-        <th class="data_info" data-sort="asc" data-name="productOrder_post">
-            <span>邮政编码</span>
-            <span class="orderByDesc"></span>
-            <span class="orderByAsc orderBySelect"></span>
-        </th>
-        <th>收货人</th>
-        <th>联系方式</th>
-        <th class="data_info" data-sort="asc" data-name="productOrder_status">
-            <span>订单状态</span>
-            <span class="orderByDesc"></span>
-            <span class="orderByAsc orderBySelect"></span>
-        </th>
-        <th>操作</th>
-        <th hidden>订单ID</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.productOrderList}" var="productOrder">
+    <table class="table_normal" id="table_order_list">
+        <thead class="text_info">
         <tr>
-            <td><input type="checkbox" class="cbx_select" id="cbx_productOrder_select_${productOrder.productOrder_id}"><label for="cbx_productOrder_select_${productOrder.productOrder_id}"></label></td>
-            <td title="${productOrder.productOrder_code}">${productOrder.productOrder_code}</td>
-            <td title="${productOrder.productOrder_post}">${productOrder.productOrder_post}</td>
-            <td title="${productOrder.productOrder_receiver}">${productOrder.productOrder_receiver}</td>
-            <td title="${productOrder.productOrder_mobile}">${productOrder.productOrder_mobile}</td>
-            <td>
-                <c:choose>
-                    <c:when test="${productOrder.productOrder_status==0}">
-                        <span class="td_await" title="等待买家付款">等待买家付款</span>
-                    </c:when>
-                    <c:when test="${productOrder.productOrder_status==1}">
-                        <span class="td_warn" title="买家已付款，等待卖家发货">等待卖家发货</span>
-                    </c:when>
-                    <c:when test="${productOrder.productOrder_status==2}">
-                        <span class="td_wait" title="卖家已发货，等待买家确认">等待买家确认</span>
-                    </c:when>
-                    <c:when test="${productOrder.productOrder_status==3}">
-                        <span class="td_success" title="交易成功">交易成功</span>
-                    </c:when>
-                    <c:otherwise><span class="td_error" title="交易关闭">交易关闭</span></c:otherwise>
-                </c:choose>
-            </td>
-            <td><span class="td_special" title="查看订单详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span>
-            </td>
-            <td hidden class="order_id">${productOrder.productOrder_id}</td>
+            <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
+            <th class="data_info" data-sort="asc" data-name="order_code">
+                <span>订单号</span>
+                <span class="orderByDesc"></span>
+                <span class="orderByAsc orderBySelect"></span>
+            </th>
+            <th>地址</th>
+            <th>收货人</th>
+            <th>联系方式</th>
+            <th class="data_info" data-sort="asc" data-name="order_status">
+                <span>订单状态</span>
+                <span class="orderByDesc"></span>
+                <span class="orderByAsc orderBySelect"></span>
+            </th>
+            <th>操作</th>
+            <th hidden>订单ID</th>
         </tr>
-    </c:forEach>
-    </tbody>
+        </thead>
+        <tbody>
+        <c:forEach items="${requestScope.orderList}" var="order">
+            <tr>
+                <td><input type="checkbox" class="cbx_select" id="cbx_order_select_${order.order_id}"><label for="cbx_order_select_${order.order_id}"></label></td>
+                <td title="${order.order_code}">${order.order_code}</td>
+                <td title="${order.order_address}">${order.order_address}</td>
+                <td title="${order.order_receiver}">${order.order_receiver}</td>
+                <td title="${order.order_phone}">${order.order_phone}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${order.order_status==0}">
+                            <span class="td_await" title="等待买家付款">等待买家付款</span>
+                        </c:when>
+                        <c:when test="${order.order_status==1}">
+                            <span class="td_warn" title="买家已付款，等待卖家发货">等待卖家发货</span>
+                        </c:when>
+                        <c:when test="${order.order_status==2}">
+                            <span class="td_wait" title="卖家已发货，等待买家确认">等待买家确认</span>
+                        </c:when>
+                        <c:when test="${order.order_status==3}">
+                            <span class="td_success" title="交易成功">交易成功</span>
+                        </c:when>
+                        <c:otherwise><span class="td_error" title="交易关闭">交易关闭</span></c:otherwise>
+                    </c:choose>
+                </td>
+                <td><span class="td_special" title="查看订单详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span>
+                </td>
+                <td hidden class="order_id">${order.order_id}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
     </table>
     <%@ include file="include/page.jsp" %>
     <div class="loader"></div>

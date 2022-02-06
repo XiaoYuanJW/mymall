@@ -1,8 +1,5 @@
 package com.example.mall.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +36,9 @@ public class User {
     /*评论集合*/
     private List<Review> reviewList;
     /*订单项（购物车）集合*/
-    private List<ProductOrderItem> productOrderItemList;
+    private List<OrderItem> productOrderItemList;
     /*订单集合*/
-    private List<ProductOrder> productOrderList;
+    private List<Order> productOrderList;
 
     @Override
     public String toString() {
@@ -229,20 +226,20 @@ public class User {
         return this;
     }
 
-    public List<ProductOrderItem> getProductOrderItemList() {
+    public List<OrderItem> getProductOrderItemList() {
         return productOrderItemList;
     }
 
-    public User setProductOrderItemList(List<ProductOrderItem> productOrderItemList) {
+    public User setProductOrderItemList(List<OrderItem> productOrderItemList) {
         this.productOrderItemList = productOrderItemList;
         return this;
     }
 
-    public List<ProductOrder> getProductOrderList() {
+    public List<Order> getProductOrderList() {
         return productOrderList;
     }
 
-    public User setProductOrderList(List<ProductOrder> productOrderList) {
+    public User setProductOrderList(List<Order> productOrderList) {
         this.productOrderList = productOrderList;
         return this;
     }

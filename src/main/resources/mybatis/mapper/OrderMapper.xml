@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mall.dao.OrderMapper">
+    <resultMap id="orderMap" type="Order">
+        <id property="order_id" column="order_id"/>
+        <result property="order_code" column="order_code"/>
+        <result property="order_address" column="order_address"/>
+        <result property="order_detail_address" column="order_detail_address"/>
+        <result property="order_phone" column="order_phone"/>
+        <result property="order_receiver" column="order_receiver"/>
+        <result property="order_pay_date" column="order_pay_date"/>
+        <result property="order_delivery_date" column="order_delivery_date"/>
+        <result property="order_confirm_date" column="order_confirm_date"/>
+        <result property="order_status" column="order_status"/>
+        <association property="order_user" javaType="com.example.mall.entity.User">
+            <id property="user_id" column="order_user_id"/>
+        </association>
+    </resultMap>
+    <!--添加订单-->
+    <insert id="insertOne" parameterType="order">
+        INSERT `order`
+        (order_id,order_code,order_address,order_detail_address,order_phone,order_receiver,order_pay_date,order_delivery_date,order_confirm_date,order_status,order_user_id)
+            VALUES (
+            null,
+            #{order.order_code},
+            #{order.order_address},
+            #{order.order_detail_address},
+            #{order.order_phone},
+            #{order.order_receiver},
+            #{order.order_pay_date},
+            #{order.order_delivery_date},
+            #{order.order_confirm_date},
+            #{order.order_status},
+            #{order.order_user.user_id})
+    </insert>
+    <!--更新订单-->
+    <update id="updateOne" parameterType="order">
+        UPDATE `order`
+        <set>
+            <if test="order.order_address != null">
+                order_address = #{order.order_address},
+            </if>
+            <if test="order.order_detail_address != null">
+                order_detail_address = #{order.order_detail_address},
+            </if>
+            <if test="order.order_phone != null">
+                order_phone = #{order.order_phone},
+            </if>
+            <if test="order.order_receiver != null">
+                order_receiver = #{order.order_receiver},
+            </if>
+            <if test="order.order_pay_date != null">
+                order_pay_date = #{order.order_pay_date},
+            </if>
+            <if test="order.order_delivery_date != null">
+                order_delivery_date = #{order.order_delivery_date},
+            </if>
+            <if test="order.order_confirm_date != null">
+                order_confirm_date = #{order.order_confirm_date},
+            </if>
+            <if test="order.order_status != null">
+                order_status = #{order.order_status}
+            </if>
+        </set>
+        <where>
+            order_id = #{order.order_id}
+        </where>
+    </update>
+    <!--列表删除订单-->
+    <delete id="deleteList" parameterType="java.util.ArrayList">
+        DELETE FROM `order`
+        <where>
+            order_id IN
+            <foreach collection="order_id_list" index="index" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+    <!--查询订单列表-->
+    <select id="select" resultMap="orderMap">
+        SELECT
+        order_id,order_code,order_address,order_detail_address,order_phone,order_receiver,order_pay_date,order_delivery_date,order_confirm_date,order_status,order_user_id
+        FROM `order`
+        <where>
+            <if test="order != null">
+                <if test="order.order_code != null">
+                    order_code LIKE concat('%',#{order.order_code},'%')
+                </if>
+                <if test="order.order_user != null">
+                    and order_user_id = #{order.order_user.user_id}
+                </if>
+            </if>
+            <if test="order_status_array != null">
+                and order_status IN
+                <foreach collection="order_status_array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="orderUtil != null">
+            ORDER BY ${orderUtil.orderBy}
+            <if test="orderUtil.isDesc">desc</if>
+        </if>
+        <if test="pageUtil != null">
+            LIMIT #{pageUtil.pageStart},#{pageUtil.count}
+        </if>
+    </select>
+    <!--订单id查询订单-->
+    <select id="selectOne" resultMap="orderMap" parameterType="int">
+        SELECT
+        order_id,order_code,order_address,order_detail_address,order_phone,order_receiver,order_pay_date,order_delivery_date,order_confirm_date,order_status,order_user_id
+        FROM `order`
+        <where>
+            order_id = #{order_id}
+        </where>
+    </select>
+    <!--订单编号查询订单-->
+    <select id="selectByCode" resultMap="orderMap" parameterType="String">
+        SELECT
+        order_id,order_code,order_address,order_detail_address,order_phone,order_receiver,order_pay_date,order_delivery_date,order_confirm_date,order_status,order_user_id
+        FROM `order`
+        <where>
+            order_code = #{order_code}
+        </where>
+    </select>
+    <!--合计订单数量-->
+    <select id="selectTotal" resultType="int">
+        SELECT COUNT(order_id) FROM `order`
+        <where>
+            <if test="order != null">
+                <if test="order.order_code">order_code LIKE concat('%',#{order.order_code},'%')</if>
+                <if test="order.order_user != null">
+                    and order_user_id = #{order.order_user.user_id}
+                </if>
+            </if>
+            <if test="order_status_array != null">and order_status IN
+                <foreach collection="order_status_array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

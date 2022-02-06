@@ -21,7 +21,7 @@ public class Review {
     /*评论对应产品*/
     private Product review_product;
     /*评论对应订单项*/
-    private ProductOrderItem review_orderItem;
+    private OrderItem review_orderItem;
 
     @Override
     public String toString() {
@@ -113,11 +113,11 @@ public class Review {
         return this;
     }
 
-    public ProductOrderItem getReview_orderItem() {
+    public OrderItem getReview_orderItem() {
         return review_orderItem;
     }
 
-    public Review setReview_orderItem(ProductOrderItem review_orderItem) {
+    public Review setReview_orderItem(OrderItem review_orderItem) {
         this.review_orderItem = review_orderItem;
         return this;
     }

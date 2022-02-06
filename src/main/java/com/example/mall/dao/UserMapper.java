@@ -11,12 +11,17 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    /*
-    添加用户信息
+    /**
+     * 添加用户信息
+     * @param user
+     * @return
      */
     Integer insertOne(@Param("user") User user);
-    /*
-    修改用户信息
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
      */
     Integer updateOne(@Param("user") User user);
     /*

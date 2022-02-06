@@ -3,7 +3,7 @@ package com.example.mall.entity;
 /**
  * 订单项实体类
  */
-public class ProductOrderItem {
+public class OrderItem {
     /*订单项ID*/
     private Integer orderItem_id;
     /*订单项产品数量*/
@@ -13,7 +13,7 @@ public class ProductOrderItem {
     /*订单项对应产品*/
     private Product orderItem_product;
     /*订单项对应订单*/
-    private ProductOrder orderItem_order;
+    private Order orderItem_order;
     /*订单项对应用户*/
     private User orderItem_user;
     /*订单产品是否已经评价*/
@@ -31,10 +31,10 @@ public class ProductOrderItem {
                 '}';
     }
 
-    public ProductOrderItem() {
+    public OrderItem() {
     }
 
-    public ProductOrderItem(Integer orderItem_id, Integer orderItem_number, Double orderItem_price, Product orderItem_product, ProductOrder orderItem_order, User orderItem_user) {
+    public OrderItem(Integer orderItem_id, Integer orderItem_number, Double orderItem_price, Product orderItem_product, Order orderItem_order, User orderItem_user) {
         this.orderItem_id = orderItem_id;
         this.orderItem_number = orderItem_number;
         this.orderItem_price = orderItem_price;
@@ -47,7 +47,7 @@ public class ProductOrderItem {
         return orderItem_id;
     }
 
-    public ProductOrderItem setOrderItem_id(Integer orderItem_id) {
+    public OrderItem setOrderItem_id(Integer orderItem_id) {
         this.orderItem_id = orderItem_id;
         return this;
     }
@@ -56,7 +56,7 @@ public class ProductOrderItem {
         return orderItem_number;
     }
 
-    public ProductOrderItem setOrderItem_number(Integer orderItem_number) {
+    public OrderItem setOrderItem_number(Integer orderItem_number) {
         this.orderItem_number = orderItem_number;
         return this;
     }
@@ -65,7 +65,7 @@ public class ProductOrderItem {
         return orderItem_price;
     }
 
-    public ProductOrderItem setOrderItem_price(Double orderItem_price) {
+    public OrderItem setOrderItem_price(Double orderItem_price) {
         this.orderItem_price = orderItem_price;
         return this;
     }
@@ -74,16 +74,16 @@ public class ProductOrderItem {
         return orderItem_product;
     }
 
-    public ProductOrderItem setOrderItem_product(Product orderItem_product) {
+    public OrderItem setOrderItem_product(Product orderItem_product) {
         this.orderItem_product = orderItem_product;
         return this;
     }
 
-    public ProductOrder getOrderItem_order() {
+    public Order getOrderItem_order() {
         return orderItem_order;
     }
 
-    public ProductOrderItem setOrderItem_order(ProductOrder orderItem_order) {
+    public OrderItem setOrderItem_order(Order orderItem_order) {
         this.orderItem_order = orderItem_order;
         return this;
     }
@@ -92,7 +92,7 @@ public class ProductOrderItem {
         return orderItem_user;
     }
 
-    public ProductOrderItem setOrderItem_user(User orderItem_user) {
+    public OrderItem setOrderItem_user(User orderItem_user) {
         this.orderItem_user = orderItem_user;
         return this;
     }
