@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mall.controller.BaseController;
-import com.example.mall.entity.Category;
 import com.example.mall.entity.Order;
 import com.example.mall.entity.OrderItem;
 import com.example.mall.entity.Product;
