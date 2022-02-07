@@ -57,17 +57,6 @@
                         return;
                     }
 
-                    // //产品属性Map
-                    // var propertyMap = {};
-                    // $("input[id^='input_product_property']").each(function () {
-                    //     var value = $.trim($(this).val());
-                    //     if (value === "") {
-                    //         return true;
-                    //     }
-                    //     var key = $(this).attr("id").substring($(this).attr("id").lastIndexOf('_') + 1);
-                    //     propertyMap[key] = value;
-                    // });
-
                     //产品图片List
                     var productSingleImageList = [];
                     $("#product_single_list").children("li:not(.details_picList_fileUpload)").each(function () {

@@ -3,6 +3,7 @@ package com.example.mall.service.impl;
 import com.example.mall.dao.ReviewMapper;
 import com.example.mall.entity.Review;
 import com.example.mall.service.ReviewService;
+import com.example.mall.util.OrderUtil;
 import com.example.mall.util.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,9 +39,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getList(Review review, PageUtil pageUtil) {
-        return reviewMapper.select(review,pageUtil);
+    public List<Review> getList(Review review, Byte[] review_stars_array, OrderUtil orderUtil,PageUtil pageUtil) {
+        return reviewMapper.select(review,review_stars_array,orderUtil,pageUtil);
     }
+
 
     @Override
     public List<Review> getListByUserId(Integer user_id, PageUtil pageUtil) {
@@ -58,9 +60,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Integer getTotal(Review review) {
-        return reviewMapper.selectTotal(review);
+    public Integer getTotal(Review review, Byte[] review_stars_array) {
+        return reviewMapper.selectTotal(review,review_stars_array);
     }
+
 
     @Override
     public Integer getTotalByUserId(Integer user_id) {

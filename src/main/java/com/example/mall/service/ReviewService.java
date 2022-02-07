@@ -1,6 +1,8 @@
 package com.example.mall.service;
 
+import com.example.mall.entity.Order;
 import com.example.mall.entity.Review;
+import com.example.mall.util.OrderUtil;
 import com.example.mall.util.PageUtil;
 
 import java.util.List;
@@ -27,13 +29,16 @@ public interface ReviewService {
      */
     boolean deleteList(Integer[] review_id_list);
 
+
     /**
      * 查询评论列表
      * @param review
+     * @param review_stars_array
+     * @param orderUtil
      * @param pageUtil
      * @return
      */
-    List<Review> getList(Review review, PageUtil pageUtil);
+    List<Review> getList(Review review,Byte[] review_stars_array,OrderUtil orderUtil,PageUtil pageUtil);
 
     /**
      * 用户id查询评论列表
@@ -63,7 +68,7 @@ public interface ReviewService {
      * @param review
      * @return
      */
-    Integer getTotal(Review review);
+    Integer getTotal(Review review,Byte[] review_stars_array);
 
     /**
      * 用户评论数量合计

@@ -54,11 +54,24 @@
     </delete>
     <!--查询评论列表-->
     <select id="select" resultMap="reviewMap">
-        SELECT review_id,review_content,review_stars,review_createDate,review_user_id,review_product_id FROM review
-        <if test="review != null">
-            <where>
-                <if test="review.review_content != null">review_content LIKE concat('%',#{review.review_content},'%')</if>
-            </where>
+        SELECT review_id,review_content,review_stars,review_createDate,review_user_id,review_product_id
+        FROM `review`
+        <where>
+            <if test="review != null">
+                <if test="review.review_content != null">
+                    review_content LIKE concat('%',#{review.review_content},'%')
+                </if>
+            </if>
+            <if test="review_stars_array != null">
+                and review_stars IN
+                <foreach collection="review_stars_array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="orderUtil != null">
+            ORDER BY ${orderUtil.orderBy}
+            <if test="orderUtil.isDesc">desc</if>
         </if>
         <if test="pageUtil != null">
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
@@ -95,11 +108,19 @@
     <!--评论数量-->
     <select id="selectTotal" resultType="int" parameterType="review">
         SELECT COUNT(review_id) FROM review
-        <if test="review != null">
-            <where>
-                <if test="review.review_content != null">review_content = #{review.review_content}</if>
-            </where>
-        </if>
+        <where>
+            <if test="review != null">
+                <if test="review.review_content != null">
+                    review_content LIKE concat('%',#{review.review_content},'%')
+                </if>
+            </if>
+            <if test="review_stars_array != null">
+                and review_stars IN
+                <foreach collection="review_stars_array" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </select>
     <!--用户评论数量合计-->
     <select id="selectTotalByUserId" resultType="int" parameterType="int">

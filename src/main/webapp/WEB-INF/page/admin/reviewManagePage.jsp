@@ -5,7 +5,7 @@
     <script>
         //检索数据集
         var dataList = {
-            "product_name": null,
+            "review_content": null,
             "review_stars_array": null,
             "orderBy": null,
             "isDesc": true
@@ -15,28 +15,28 @@
              * event
              ******/
             //点击查询按钮时
-            $("#btn_reward_submit").click(function () {
-                var reward_name = $.trim($("#input_reward_name").val());
+            $("#btn_review_submit").click(function () {
+                var review_content = $.trim($("#input_review_content").val());
                 //打赏状态数组
                 var status_array = [];
                 $("input[name = checkbox_review_stars]:checked").each(function () {
                     status_array.push($(this).val());
                 });
                 //封装数据
-                dataList.product_name = encodeURI(product_name);
+                dataList.review_content = encodeURI(review_content);
                 dataList.review_stars_array = status_array;
 
-                getData($(this), "admin/reward/0/10", dataList);
+                getData($(this), "admin/review/0/10", dataList);
             });
             //点击刷新按钮时
-            $("#btn_reward_refresh").click(function () {
+            $("#btn_review_refresh").click(function () {
                 //清除数据
-                dataList.product_name = null;
+                dataList.review_content = null;
                 dataList.review_stars_array = null;
                 dataList.orderBy = null;
                 dataList.isDesc = true;
                 //获取数据
-                getData($(this), "admin/reward/0/10", null);
+                getData($(this), "admin/review/0/10", null);
                 //清除排序样式
                 var table = $("#table_review_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
@@ -53,7 +53,7 @@
                 //是否倒序排序
                 dataList.isDesc = $(this).attr("data-sort")==="asc";
 
-                getData($(this), "admin/reward/0/10", dataList);
+                getData($(this), "admin/review/0/10", dataList);
                 //设置排序
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 if(dataList.isDesc){
@@ -69,7 +69,7 @@
                 trDataStyle($(this));
             });
         });
-        //获取打赏数据
+        //获取评论数据
         function getData(object, url, dataObject) {
             var table = $("#table_review_list");
             var tbody = table.children("tbody").first();
@@ -86,46 +86,27 @@
                     object.attr("disabled",false);
                     //显示打赏统计数据
                     $("#review_count_data").text(data.reviewCount);
-                    if(data.rewardList.length > 0) {
+                    if(data.reviewList.length > 0) {
                         for (var i = 0; i < data.reviewList.length; i++) {
-                            var isEnabledClass;
-                            var isEnabledTitle;
-                            var isEnabled;
-                            switch (data.reviewList[i].review_state) {
-                                case 0:
-                                    isEnabledClass = "td_warn";
-                                    isEnabledTitle = "打赏待审核";
-                                    isEnabled = "待审核";
-                                    break;
-                                case 1:
-                                    isEnabledClass = "td_success";
-                                    isEnabledTitle = "打赏已审核";
-                                    isEnabled = "已审核";
-                                    break;
-                                default:
-                                    isEnabledClass = "td_error";
-                                    isEnabledTitle = "打赏未确认";
-                                    isEnabled = "未确认";
-                                    break;
-                            }
-                            var review_id = data.reviewList[i].reward_id;
-                            var reward_name = data.rewardList[i].reward_name;
-                            var reward_amount = data.rewardList[i].reward_amount;
-                            var reward_createDate = data.rewardList[i].reward_createDate;
-                            var reward_content = data.rewardList[i].reward_content;
+                            var review_id = data.reviewList[i].review_id;
+                            var review_user = data.reviewList[i].review_user.user_name;
+                            var review_content = data.reviewList[i].review_content;
+                            var review_stars = data.reviewList[i].review_stars;
+                            var review_createDate = data.reviewList[i].review_createDate;
+                            var review_product = data.reviewList[i].review_product.product_name;
                             //显示打赏数据
                             tbody.append("<tr>" +
                                 "<td>" +
-                                "<input type='checkbox' class='cbx_select' id='cbx_reward_select_" + reward_id + "'>" +
-                                "<label for='cbx_reward_select_" + reward_id + "'></label>" +
+                                "<input type='checkbox' class='cbx_select' id='cbx_review_select_" + review_id + "'>" +
+                                "<label for='cbx_review_select_" + review_id + "'></label>" +
                                 "</td>" +
-                                "<td title='" + reward_name + "'>" + reward_name + "</td>" +
-                                "<td title='" + reward_amount + "'>" + reward_amount + "</td>" +
-                                "<td title='" + reward_createDate + "'>" + reward_createDate + "</td>" +
-                                "<td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td>" +
-                                "<td title='" + reward_content + "'>" + reward_content + "</td>" +
+                                "<td title='" + review_user + "'>" + review_user + "</td>" +
+                                "<td title='" + review_content + "'>" + review_content + "</td>" +
+                                "<td title='" + review_stars + "'>" + review_stars + "</td>" +
+                                "<td title='" + review_createDate + "'>" + review_createDate + "</td>" +
+                                "<td title='" + review_product + "'>" + review_product + "</td>" +
                                 "<td><span class='td_special' title='查看打赏详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td>" +
-                                "<td hidden class='reward_id'>" + reward_id + "</td></tr>");
+                                "<td hidden class='review_id'>" + review_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -153,17 +134,17 @@
 
         //获取打赏子界面
         function getChildPage(obj) {
-            alert("待完成")
+            alert("未完成")
             // //设置样式
             // $("#div_home_title").children("span").text("打赏详情");
             // document.title = "Tmall管理后台 - 打赏详情";
             // //ajax请求页面
-            // ajaxUtil.getPage("reward/" + $(obj).parents("tr").find(".reward_id").text(), null, true);
+            // ajaxUtil.getPage("review/" + $(obj).parents("tr").find(".review_id").text(), null, true);
         }
 
         //获取页码数据
         function getPage(index) {
-            getData($(this), "admin/reward/" + index + "/10", dataList);
+            getData($(this), "admin/review/" + index + "/10", dataList);
         }
     </script>
     <style rel="stylesheet">
@@ -172,7 +153,7 @@
             right: 10px;
             color: #ccc;
         }
-        #lbl_reward_isEnabled_special{
+        #lbl_review_isEnabled_special{
             margin-right: 20px;
         }
     </style>
@@ -180,15 +161,13 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_reward_name" for="input_reward_name">打赏人昵称</label>
-        <input class="frm_input" id="input_reward_name" type="text" maxlength="50"/>
-        <input class="frm_btn" id="btn_reward_submit" type="button" value="查询"/>
+        <label class="frm_label" id="lbl_review_content" for="input_review_content">评论人内容</label>
+        <input class="frm_input" id="input_review_content" type="text" maxlength="50"/>
+        <input class="frm_btn" id="btn_review_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
     <div class="frm_group">
-        <label class="frm_label" id="lbl_review_stars" for="checkbox_review_stars_zero">评论星级</label>
-        <input id="checkbox_review_stars_zero" name="checkbox_review_stars" type="checkbox" value="0" checked>
-        <label class="frm_label" id="lbl_review_stars_zero" for="checkbox_review_stars_zero">0星</label>
+        <label class="frm_label " id="lbl_review_stars" for="checkbox_review_stars_one">评论星级</label>
         <input id="checkbox_review_stars_one" name="checkbox_review_stars" type="checkbox" value="1" checked>
         <label class="frm_label" id="lbl_review_stars_one" for="checkbox_review_stars_one">1星</label>
         <input id="checkbox_review_stars_two" name="checkbox_review_stars" type="checkbox" value="2" checked>
@@ -201,7 +180,7 @@
         <label class="frm_label" id="lbl_review_stars_five" for="checkbox_review_stars_five">5星</label>
     </div>
     <div class="frm_group_last">
-        <input class="frm_btn frm_refresh" id="btn_reward_refresh" type="button" value="刷新打赏列表"/>
+        <input class="frm_btn frm_refresh" id="btn_review_refresh" type="button" value="刷新打赏列表"/>
     </div>
 </div>
 <div class="data_count_div text_info">
@@ -224,44 +203,34 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
-            <th>打赏人昵称</th>
-            <th class="data_info" data-sort="asc" data-name="reward_amount">
-                <span>金额</span>
+            <th>评论人昵称</th>
+            <th>评论内容</th>
+            <th class="data_info" data-sort="asc" data-name="review_stars">
+                <span>星级</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="reward_createDate">
-                <span>打赏时间</span>
+            <th class="data_info" data-sort="asc" data-name="review_createDate">
+                <span>评论时间</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
-            <th class="data_info" data-sort="asc" data-name="reward_state">
-                <span>状态</span>
-                <span class="orderByDesc"></span>
-                <span class="orderByAsc orderBySelect"></span>
-            </th>
-            <th>留言</th>
+            <th>商品名称</th>
             <th>操作</th>
-            <th hidden class="reward_id">打赏ID</th>
+            <th hidden class="review_id">评论ID</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.rewardList}" var="reward">
+        <c:forEach items="${requestScope.reviewList}" var="review">
             <tr>
-                <td><input type="checkbox" class="cbx_select" id="cbx_reward_select_${reward.reward_id}"><label for="cbx_reward_select_${reward.reward_id}"></label></td>
-                <td title="${reward.reward_name}">${reward.reward_name}</td>
-                <td title="${reward.reward_amount}">${reward.reward_amount}</td>
-                <td title="${reward.reward_createDate}">${reward.reward_createDate}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${reward.reward_state==0}"><span class="td_warn" title="打赏待审核">待审核</span></c:when>
-                        <c:when test="${reward.reward_state==1}"><span class="td_success" title="打赏已审核">已审核</span></c:when>
-                        <c:otherwise><span class="td_error" title="打赏未确认">未确认</span></c:otherwise>
-                    </c:choose>
-                </td>
-                <td title="${reward.reward_content}">${reward.reward_content}</td>
-                <td><span class="td_special" title="查看打赏详情"><a href="javascript:void(0)"
+                <td><input type="checkbox" class="cbx_select" id="cbx_review_select_${review.review_id}"><label for="cbx_review_select_${review.review_id}"></label></td>
+                <td title="${review.review_user.user_name}">${review.review_user.user_name}</td>
+                <td title="${review.review_content}">${review.review_content}</td>
+                <td title="${review.review_stars}">${review.review_stars}</td>
+                <td title="${review.review_createDate}">${review.review_createDate}</td>
+                <td title="${review.review_product.product_name}">${review.review_product.product_name}</td>
+                <td><span class="td_special" title="查看.打赏详情"><a href="javascript:void(0)"
                                                                onclick="getChildPage(this)">详情</a></span></td>
-                <td hidden><span class="reward_id">${reward.reward_id}</span></td>
+                <td hidden><span class="review_id">${review.review_id}</span></td>
             </tr>
         </c:forEach>
         </tbody>

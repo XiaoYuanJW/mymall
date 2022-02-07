@@ -101,38 +101,6 @@ public class UserController extends BaseController {
         return object.toJSONString();
     }
 
-//    /*
-//    转到后台管理-用户详情页
-//     */
-//    @RequestMapping(value = "admin/user/{user_id}", method = RequestMethod.GET)
-//    public String getUserById(HttpSession session, Map<String,Object> map, @PathVariable Integer user_id){
-//        logger.info("获取user_id为{}的用户信息",user_id);
-//        User user = userService.get(user_id);
-//        logger.info("获取用户详情-购物车订单项信息");
-//        List<OrderItem> orderItemList = orderItemService.getListByUserId(
-//                user.getUser_id(), null
-//        );
-//        if (orderItemList != null) {
-//            logger.info("获取用户详情-购物车订单项对应的产品信息");
-//            for (OrderItem orderItem : orderItemList) {
-//                Integer productId = orderItem.getOrderItem_product().getProduct_id();
-//                logger.warn("获取产品ID为{}的产品信息", productId);
-//                Product product = productService.get(productId);
-//                if (product != null) {
-//                    logger.warn("获取产品ID为{}的第一张预览图片信息", productId);
-//                    product.setSingleProductImageList(productImageService.getList(
-//                            productId, (byte) 0, new PageUtil(0, 1))
-//                    );
-//                }
-//                orderItem.setOrderItem_product(product);
-//            }
-//        }
-//        user.setOrderItemList(orderItemList);
-//        map.put("user",user);
-//        logger.info("转到后台管理-用户详情页-ajax方式");
-//        return "admin/include/userDetails";
-//    }
-
     /*
     转到后台管理-用户详情页
      */
