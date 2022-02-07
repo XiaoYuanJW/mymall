@@ -4,7 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mall.controller.BaseController;
+import com.example.mall.entity.OrderItem;
+import com.example.mall.entity.Product;
 import com.example.mall.entity.User;
+import com.example.mall.service.OrderItemService;
+import com.example.mall.service.ProductImageService;
+import com.example.mall.service.ProductService;
 import com.example.mall.service.UserService;
 import com.example.mall.util.OrderUtil;
 import com.example.mall.util.PageUtil;
@@ -17,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * 后台管理-用户页
@@ -25,6 +31,12 @@ import java.util.Map;
 public class UserController extends BaseController {
     @Resource(name="userService")
     private UserService userService;
+    @Resource(name = "orderItemService")
+    private OrderItemService orderItemService;
+    @Resource(name = "productService")
+    private ProductService productService;
+    @Resource(name = "productImageService")
+    private ProductImageService productImageService;
 
     /*
     转到后台管理-用户页
@@ -89,21 +101,21 @@ public class UserController extends BaseController {
         return object.toJSONString();
     }
 
-    /*
-    转到后台管理-用户详情页
-     */
-    @RequestMapping(value = "admin/user/{user_id}", method = RequestMethod.GET)
-    public String getUserById(HttpSession session, Map<String,Object> map, @PathVariable Integer user_id){
-        logger.info("获取user_id为{}的用户信息",user_id);
-        User user = userService.get(user_id);
+//    /*
+//    转到后台管理-用户详情页
+//     */
+//    @RequestMapping(value = "admin/user/{user_id}", method = RequestMethod.GET)
+//    public String getUserById(HttpSession session, Map<String,Object> map, @PathVariable Integer user_id){
+//        logger.info("获取user_id为{}的用户信息",user_id);
+//        User user = userService.get(user_id);
 //        logger.info("获取用户详情-购物车订单项信息");
-//        List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByUserId(
+//        List<OrderItem> orderItemList = orderItemService.getListByUserId(
 //                user.getUser_id(), null
 //        );
-//            if (productOrderItemList != null) {
+//        if (orderItemList != null) {
 //            logger.info("获取用户详情-购物车订单项对应的产品信息");
-//            for (ProductOrderItem productOrderItem : productOrderItemList) {
-//                Integer productId = productOrderItem.getProductOrderItem_product().getProduct_id();
+//            for (OrderItem orderItem : orderItemList) {
+//                Integer productId = orderItem.getOrderItem_product().getProduct_id();
 //                logger.warn("获取产品ID为{}的产品信息", productId);
 //                Product product = productService.get(productId);
 //                if (product != null) {
@@ -112,10 +124,40 @@ public class UserController extends BaseController {
 //                            productId, (byte) 0, new PageUtil(0, 1))
 //                    );
 //                }
-//                productOrderItem.setProductOrderItem_product(product);
+//                orderItem.setOrderItem_product(product);
 //            }
 //        }
-//        user.setProductOrderItemList(productOrderItemList);
+//        user.setOrderItemList(orderItemList);
+//        map.put("user",user);
+//        logger.info("转到后台管理-用户详情页-ajax方式");
+//        return "admin/include/userDetails";
+//    }
+
+    /*
+    转到后台管理-用户详情页
+     */
+    @RequestMapping(value = "admin/user/{uid}", method = RequestMethod.GET)
+    public String getUserById(HttpSession session, Map<String,Object> map, @PathVariable Integer uid){
+        logger.info("获取user_id为{}的用户信息",uid);
+        User user = userService.get(uid);
+        logger.info("获取用户详情-购物车订单项信息");
+        List<OrderItem> orderItemList = orderItemService.getListByUserId(user.getUser_id(), null);
+        if (orderItemList != null) {
+            logger.info("获取用户详情-购物车订单项对应的产品信息");
+            for (OrderItem orderItem : orderItemList) {
+                Integer productId = orderItem.getOrderItem_product().getProduct_id();
+                logger.warn("获取产品ID为{}的产品信息", productId);
+                Product product = productService.get(productId);
+                if (product != null) {
+                    logger.warn("获取产品ID为{}的第一张预览图片信息", productId);
+                    product.setSingleProductImageList(productImageService.getList(
+                            productId, (byte) 0, new PageUtil(0, 1))
+                    );
+                }
+                orderItem.setOrderItem_product(product);
+            }
+        }
+        user.setOrderItemList(orderItemList);
         map.put("user",user);
         logger.info("转到后台管理-用户详情页-ajax方式");
         return "admin/include/userDetails";

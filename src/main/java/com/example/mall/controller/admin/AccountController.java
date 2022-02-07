@@ -111,13 +111,10 @@ public class AccountController extends BaseController {
                 return jsonObject.toJSONString();
             }
         }
-        /*
-        头像更改
-         */
-//        if (admin_icon != null && !"".equals(admin_icon)) {
-//            logger.info("管理员头像路径为{}", admin_icon);
-//            putAdmin.setAdmin_icon(admin_icon.substring(admin_icon.lastIndexOf("/") + 1));
-//        }
+        if (admin_icon != null && !"".equals(admin_icon)) {
+            logger.info("管理员头像路径为{}", admin_icon);
+            putAdmin.setAdmin_icon(admin_icon.substring(admin_icon.lastIndexOf("/") + 1));
+        }
         logger.info("更新管理员信息，管理员ID值为：{}", admin_id);
         Boolean update = adminService.update(putAdmin);
         if (update) {
@@ -135,14 +132,34 @@ public class AccountController extends BaseController {
     }
 
     /**
-     * 管理员头像上传(未实现)
+     * 管理员头像上传
      * @param file
      * @param session
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "admin/uploadAdminHeadImage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String uploadAdminHeadImage(@RequestParam MultipartFile file, HttpSession session) {
-        return null;
+        String originalFileName = file.getOriginalFilename();
+        logger.info("获取图片原始文件名：{}", originalFileName);
+        assert originalFileName != null;
+        String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+        //生成随机名
+        String fileName = UUID.randomUUID() + extension;
+        //获取上传路径
+        String filePath = session.getServletContext().getRealPath("/") + "res/images/item/adminProfilePicture/" + fileName;
+        logger.info("文件上传路径：{}", filePath);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            logger.info("文件上传中...");
+            file.transferTo(new File(filePath));
+            logger.info("文件上传成功！");
+            jsonObject.put("success", true);
+            jsonObject.put("fileName", fileName);
+        } catch (IOException e) {
+            logger.warn("文件上传失败！");
+            e.printStackTrace();
+            jsonObject.put("success", false);
+        }
+        return jsonObject.toJSONString();
     }
 }

@@ -36,9 +36,9 @@ public class User {
     /*评论集合*/
     private List<Review> reviewList;
     /*订单项（购物车）集合*/
-    private List<OrderItem> productOrderItemList;
+    private List<OrderItem> orderItemList;
     /*订单集合*/
-    private List<Order> productOrderList;
+    private List<Order> orderList;
 
     @Override
     public String toString() {
@@ -226,21 +226,21 @@ public class User {
         return this;
     }
 
-    public List<OrderItem> getProductOrderItemList() {
-        return productOrderItemList;
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
     }
 
-    public User setProductOrderItemList(List<OrderItem> productOrderItemList) {
-        this.productOrderItemList = productOrderItemList;
+    public User setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
         return this;
     }
 
-    public List<Order> getProductOrderList() {
-        return productOrderList;
+    public List<Order> getOrderList() {
+        return orderList;
     }
 
-    public User setProductOrderList(List<Order> productOrderList) {
-        this.productOrderList = productOrderList;
+    public User setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
         return this;
     }
 }

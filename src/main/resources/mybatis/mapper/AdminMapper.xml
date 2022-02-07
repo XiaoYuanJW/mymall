@@ -3,6 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mall.dao.AdminMapper">
+    <!--添加管理员信息-->
+    <insert id="insertOne" parameterType="admin">
+        INSERT admin(admin_id,admin_nickname,admin_password,admin_icon,admin_phone,admin_email)
+        VALUES (
+        null,
+        #{admin.admin_id},
+        #{admin.admin_nickname},
+        #{admin.admin_password},
+        #{admin.admin_icon},
+        #{admin.admin_phone},
+        #{admin.admin_email})
+    </insert>
     <!--修改管理员信息-->
     <update id="updateOne" parameterType="admin">
         UPDATE admin

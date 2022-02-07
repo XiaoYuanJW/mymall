@@ -54,31 +54,31 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> getListByProductId(Integer product_id, PageUtil pageUtil) {
-        return null;
+        return orderItemMapper.selectByProductId(product_id,pageUtil);
     }
 
     @Override
     public OrderItem get(Integer orderItem_id) {
-        return null;
+        return orderItemMapper.selectOne(orderItem_id);
     }
 
     @Override
     public Integer getTotal() {
-        return null;
+        return orderItemMapper.selectTotal();
     }
 
     @Override
     public Integer getTotalByOrderId(Integer order_id) {
-        return null;
+        return orderItemMapper.selectTotalByOrderId(order_id);
     }
 
     @Override
     public Integer getTotalByUserId(Integer user_id) {
-        return null;
+        return orderItemMapper.selectTotalByUserId(user_id);
     }
 
     @Override
     public Integer getSaleCountByProductId(Integer product_id) {
-        return null;
+        return orderItemMapper.selectSaleCount(product_id);
     }
 }

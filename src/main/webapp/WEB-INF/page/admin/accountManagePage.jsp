@@ -17,7 +17,7 @@
                 var admin_password = null;
                 var admin_newPassword = null;
                 if ($("#admin_icon").hasClass("new")) {
-                    admin_image_src = $.trim($("#admin_profile_picture").attr("src"));
+                    admin_icon = $.trim($("#admin_icon").attr("src"));
                 }
                 if ($(".modifyPwd").css("display") === "block") {
                     admin_password = $.trim($("#input_admin_password").val());
@@ -156,7 +156,7 @@
         }
     </script>
     <style rel="stylesheet">
-        #admin_profile_picture {
+        #admin_icon {
             border-radius: 5px;
         }
 
@@ -193,10 +193,10 @@
 <div class="details_div">
     <span class="details_title text_info">基本信息</span>
     <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_admin_profile_picture">管理员头像</label>
+        <label class="frm_label text_info" id="lbl_admin_icon">管理员头像</label>
         <img
                 src="${pageContext.request.contextPath}/res/images/item/adminProfilePicture/${requestScope.admin.admin_icon}"
-                id="admin_profile_picture" width="84px" height="84px"
+                id="admin_icon" width="84px" height="84px"
                 onerror="this.src='${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png'"/>
         <input type="file" onchange="uploadImage(this)" accept="image/*" id="uploadImage">
     </div>

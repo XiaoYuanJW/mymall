@@ -11,7 +11,6 @@
             <id property="product_id" column="productImage_product_id"/>
         </association>
     </resultMap>
-
     <insert id="insertOne" parameterType="productImage">
         INSERT productImage (productImage_id,productImage_type,productImage_src,productImage_product_id)
         VALUES (

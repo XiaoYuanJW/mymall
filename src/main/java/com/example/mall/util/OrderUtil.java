@@ -4,9 +4,9 @@ package com.example.mall.util;
  * 查询排序工具
  */
 public final class OrderUtil {
-    //排序字段
+    /*排序字段*/
     private String orderBy;
-    //倒序排序
+    /*倒序排序*/
     private boolean isDesc;
 
     public OrderUtil(String orderBy){

@@ -14,14 +14,14 @@
             });
         });
 
-        //获取产品子界面
-        // function getChildPage(obj) {
-        //     //设置样式
-        //     $("#div_home_title").children("span").text("产品详情");
-        //     document.title = "Mall管理后台 - 产品详情";
-        //     //ajax请求页面
-        //     ajaxUtil.getPage("product/" + $(obj).parents("tr").find(".product_id").text(), null, true);
-        // }
+        获取产品子界面
+        function getChildPage(obj) {
+            //设置样式
+            $("#div_home_title").children("span").text("产品详情");
+            document.title = "Mall管理后台 - 产品详情";
+            //ajax请求页面
+            ajaxUtil.getPage("product/" + $(obj).parents("tr").find(".product_id").text(), null, true);
+        }
     </script>
     <style rel="stylesheet">
         #user_profile_picture {
@@ -89,42 +89,40 @@
               id="span_user_address">${requestScope.user.user_address}</span>
     </div>
 </div>
-<%--<div class="details_div details_div_last">--%>
-<%--    <span class="details_title text_info">购物车信息</span>--%>
-<%--    <table class="table_normal" id="table_orderItem_list">--%>
-<%--        <thead class="text_info">--%>
-<%--        <tr>--%>
-<%--            <th>产品图片</th>--%>
-<%--            <th>产品名称</th>--%>
-<%--            <th>单价</th>--%>
-<%--            <th>数量</th>--%>
-<%--            <th>价格</th>--%>
-<%--            <th>备注</th>--%>
-<%--            <th>操作</th>--%>
-<%--            <th hidden class="product_id">产品ID</th>--%>
-<%--        </tr>--%>
-<%--        </thead>--%>
-<%--        <tbody>--%>
-<%--        <c:forEach items="${requestScope.user.productOrderItemList}" var="item" varStatus="i">--%>
-<%--            <tr>--%>
-<%--                <td title="产品图片"><img--%>
-<%--                        src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${item.productOrderItem_product.singleProductImageList[0].productImage_src}"--%>
-<%--                        id="pic_single_${item.productOrderItem_product.singleProductImageList[0].productImage_id}"--%>
-<%--                        width="42px" height="42px"--%>
-<%--                        name="${item.productOrderItem_product.singleProductImageList[0].productImage_id}"/></td>--%>
-<%--                <td title="${item.productOrderItem_product.product_name}">${item.productOrderItem_product.product_name}</td>--%>
-<%--                <td title="${item.productOrderItem_product.product_sale_price}">${item.productOrderItem_product.product_sale_price}</td>--%>
-<%--                <td title="${item.productOrderItem_number}">${item.productOrderItem_number}</td>--%>
-<%--                <td title="${item.productOrderItem_price}">${item.productOrderItem_price}</td>--%>
-<%--                <td title="${item.productOrderItem_userMessage}">${item.productOrderItem_userMessage}</td>--%>
-<%--                <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)"--%>
-<%--                                                               onclick="getChildPage(this)">详情</a></span></td>--%>
-<%--                <td hidden><span class="product_id">${item.productOrderItem_product.product_id}</span></td>--%>
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--        </tbody>--%>
-<%--    </table>--%>
-<%--</div>--%>
+<div class="details_div details_div_last">
+    <span class="details_title text_info">购物车信息</span>
+    <table class="table_normal" id="table_orderItem_list">
+        <thead class="text_info">
+        <tr>
+            <th>产品图片</th>
+            <th>产品名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>价格</th>
+            <th>操作</th>
+            <th hidden class="product_id">产品ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${requestScope.user.orderItemList}" var="item" varStatus="i">
+            <tr>
+                <td title="产品图片"><img
+                        src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${item.orderItem_product.singleProductImageList[0].productImage_src}"
+                        id="pic_single_${item.orderItem_product.singleProductImageList[0].productImage_id}"
+                        width="42px" height="42px"
+                        name="${item.orderItem_product.singleProductImageList[0].productImage_id}"/></td>
+                <td title="${item.orderItem_product.product_name}">${item.orderItem_product.product_name}</td>
+                <td title="${item.orderItem_product.product_sale_price}">${item.orderItem_product.product_sale_price}</td>
+                <td title="${item.orderItem_number}">${item.orderItem_number}</td>
+                <td title="${item.orderItem_price}">${item.orderItem_price}</td>
+                <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)"
+                                                               onclick="getChildPage(this)">详情</a></span></td>
+                <td hidden><span class="product_id">${item.orderItem_product.product_id}</span></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 <div class="details_tools_div">
     <input class="frm_btn frm_clear" id="btn_user_cancel" type="button" value="退出"/>
 </div>

@@ -12,24 +12,24 @@ import java.util.List;
 public interface OrderItemMapper {
     /**
      * 添加订单项
-     * @param productOrderItem
+     * @param orderItem
      * @return
      */
-    Integer insertOne(@Param("productOrderItem") OrderItem productOrderItem);
+    Integer insertOne(@Param("orderItem") OrderItem orderItem);
 
     /**
      * 更新订单项
-     * @param productOrderItem
+     * @param orderItem
      * @return
      */
-    Integer updateOne(@Param("productOrderItem") OrderItem productOrderItem);
+    Integer updateOne(@Param("orderItem") OrderItem orderItem);
 
     /**
      * 列表删除订单项
-     * @param productOrderItem_id_list
+     * @param orderItem_id_list
      * @return
      */
-    Integer deleteList(@Param("productOrderItem_id_list") Integer[] productOrderItem_id_list);
+    Integer deleteList(@Param("orderItem_id_list") Integer[] orderItem_id_list);
 
     /**
      * 查询订单项列表
@@ -64,10 +64,10 @@ public interface OrderItemMapper {
 
     /**
      * 订单项id查询订单项
-     * @param productOrderItem_id
+     * @param orderItem_id
      * @return
      */
-    OrderItem selectOne(@Param("productOrderItem_id") Integer productOrderItem_id);
+    OrderItem selectOne(@Param("orderItem_id") Integer orderItem_id);
 
     /**
      * 合计订单项数量

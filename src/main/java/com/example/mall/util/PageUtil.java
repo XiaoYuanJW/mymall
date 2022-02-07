@@ -4,13 +4,13 @@ package com.example.mall.util;
  * 查询分页工具
  */
 public final class PageUtil {
-    //当前页
+    /*当前页*/
     private Integer index;
-    //每页个数
+    /*每页个数*/
     private Integer count;
-    //总数
+    /*总数*/
     private Integer total;
-    //行数起始值
+    /*行数起始值*/
     private Integer pageStart;
 
     public PageUtil(Integer index, Integer count) {

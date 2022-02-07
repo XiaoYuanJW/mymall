@@ -4,7 +4,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_userDatiles.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_userDatiles.css" rel="stylesheet">
-    <title>天猫tmall.com - 个人中心</title>
+    <title> mall.com - 个人中心</title>
     <style rel="stylesheet">
         #baseNavigator {
             padding: 22px 0;
@@ -44,7 +44,7 @@
 <div class="content">
     <div class="mt-menu" id="J_MtSideMenu">
         <div class="mt-avatar">
-            <img src="${pageContext.request.contextPath}/res/images/item/userProfilePicture/${requestScope.user.user_profile_picture_src}"
+            <img src="${pageContext.request.contextPath}/res/images/item/userProfilePicture/${requestScope.user.user_icon}"
                  onerror="this.src='${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png'"
                  width="128px" height="128px">
         </div>
@@ -67,11 +67,11 @@
                     <label class="form-label tsl">当前头像：</label>
                     <ul class="details_picList" id="product_single_list">
                         <li class="details_picList_fileUpload">
-                            <img src="${pageContext.request.contextPath}/res/images/item/userProfilePicture/${requestScope.user.user_profile_picture_src}"
+                            <img src="${pageContext.request.contextPath}/res/images/item/userProfilePicture/${requestScope.user.user_icon}"
                                  onerror="this.src='${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png'"
                                  id="header_image" width="128px" height="128px">
-                            <input type="file" onchange="uploadImage(this)" id="user_profile_picture_src" accept="image/*">
-                            <input name="user_profile_picture_src" id="user_profile_picture_src_value" type="hidden"/>
+                            <input type="file" onchange="uploadImage(this)" id="user_icon" accept="image/*">
+                            <input name="user_icon" id="user_icon_value" type="hidden"/>
                         </li>
                     </ul>
                 </div>
@@ -82,9 +82,21 @@
                     <span class="form_span"></span>
                 </div>
                 <div class="form-item">
-                    <label class="form-label tsl">真实姓名：</label>
-                    <input name="user_realname" value="${requestScope.user.user_realname}" id="user_realname"
+                    <label class="form-label tsl">电话：</label>
+                    <input name="user_phone" value="${requestScope.user.user_phone}" id="user_phone"
                            class="form-text err-input" maxlength="20">
+                    <span class="form_span"></span>
+                </div>
+                <div class="form-item">
+                    <label class="form-label tsl">邮件：</label>
+                    <input name="user_email" value="${requestScope.user.user_email}" id="user_email"
+                           class="form-text err-input" maxlength="20">
+                    <span class="form_span"></span>
+                </div>
+                <div class="form-item">
+                    <label class="form-label tsl">个性签名：</label>
+                    <input name="user_sign" value="${requestScope.user.user_sign}" id="user_sign"
+                           class="form-text err-input" maxlength="40">
                     <span class="form_span"></span>
                 </div>
                 <div class="form-item">
@@ -114,26 +126,11 @@
                            value="${requestScope.user.user_birthday}" maxlength="20">
                     <span class="form_span"></span>
                 </div>
-                <div class="form-item last-item">
-                    <label class="form-label tsl">居住地址：</label>
-                    <select class="selectpicker" id="select_user_address_province" data-size="8" data-live-search="true">
-                        <c:forEach items="${requestScope.addressList}" var="address" varStatus="i">
-                            <option value="${address.address_areaId}"
-                                    <c:if test="${requestScope.addressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-                        </c:forEach>
-                    </select>
-                    <select class="selectpicker" id="select_user_address_city" data-size="8" data-live-search="true">
-                        <c:forEach items="${requestScope.cityList}" var="address" varStatus="i">
-                            <option value="${address.address_areaId}"
-                                    <c:if test="${requestScope.cityAddressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-                        </c:forEach>
-                    </select>
-                    <select name="user_address" class="selectpicker" id="select_user_address_district" data-size="8" data-live-search="true">
-                        <c:forEach items="${requestScope.districtList}" var="address" varStatus="i">
-                            <option value="${address.address_areaId}"
-                                    <c:if test="${requestScope.districtAddressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-                        </c:forEach>
-                    </select>
+                <div class="form-item">
+                    <label class="form-label tsl">地址：</label>
+                    <input name="user_address" value="${requestScope.user.user_address}" id="user_address"
+                           class="form-text err-input" maxlength="20">
+                    <span class="form_span"></span>
                 </div>
                 <div class="form-item">
                     <input type="submit" id="register_sub" class="btns btn-large tsl" value="提 交"/>

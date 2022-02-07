@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(Admin admin) {
-        return false;
+        return adminMapper.insertOne(admin)>0;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
