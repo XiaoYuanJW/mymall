@@ -5,7 +5,7 @@
 <body>
 <title><c:choose><c:when test="${requestScope.searchValue != null}">${requestScope.searchValue}</c:when>
     <c:otherwise><c:choose><c:when
-            test="${requestScope.productList != null && fn:length(requestScope.productList)>0}">${requestScope.productList[0].product_category.category_name}</c:when><c:otherwise>没找到相关商品</c:otherwise></c:choose></c:otherwise></c:choose>-天猫Tmall.com-理想生活上天猫</title>
+            test="${requestScope.productList != null && fn:length(requestScope.productList)>0}">${requestScope.productList[0].product_category.category_name}</c:when><c:otherwise>没找到相关商品</c:otherwise></c:choose></c:otherwise></c:choose>-校园超市-理想生活上校园超市</title>
 <nav>
     <%@ include file="include/navigator.jsp" %>
     <div class="header">
@@ -16,7 +16,7 @@
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                            value="${requestScope.searchValue}" maxlength="50">
                     <input type="submit" value="搜 索" class="searchBtn">
                 </div>
@@ -80,7 +80,7 @@
                             <p class="context_product_price"><span>¥</span>${product.product_sale_price}</p>
                             <p class="context_product_name"><a href="/tmall/product/${product.product_id}"
                                                                target="_blank">${product.product_name}</a></p>
-                            <p class="context_product_shop"><span>贤趣${product.product_category.category_name}旗舰店</span>
+                            <p class="context_product_shop"><span>校园${product.product_category.category_name}店</span>
                             </p>
                             <p class="context_product_status">
                                 <span class="status_left">总成交<em><c:choose><c:when

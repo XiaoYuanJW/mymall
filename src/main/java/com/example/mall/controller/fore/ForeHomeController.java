@@ -36,7 +36,13 @@ public class ForeHomeController extends BaseController {
     private ProductService productService;
     @Resource(name="productImageService")
     private ProductImageService productImageService;
-    //转到前台天猫-主页
+
+    /**
+     * 转到前台-主页
+     * @param session
+     * @param map
+     * @return
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String goToPage(HttpSession session, Map<String, Object> map) {
         logger.info("检查用户是否登录");
@@ -73,47 +79,52 @@ public class ForeHomeController extends BaseController {
                 null, new Byte[]{2}, null, new PageUtil(0, 6)
         );
         map.put("specialProductList", specialProductList);
-
         logger.info("转到前台主页");
         return "fore/homePage";
     }
 
-    //转到前台天猫-错误页
+    /**
+     * 转到前台-错误页
+     * @return
+     */
     @RequestMapping(value = "error", method = RequestMethod.GET)
     public String goToErrorPage() {
         return "fore/errorPage";
     }
 
-//    //获取主页分类下产品信息-ajax
-//    @ResponseBody
-//    @RequestMapping(value = "product/nav/{category_id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-//    public String getProductByNav(@PathVariable("category_id") Integer category_id) {
-//        JSONObject object = new JSONObject();
-//        if (category_id == null) {
-//            object.put("success", false);
-//            return object.toJSONString();
-//        }
-//        logger.info("获取分类ID为{}的产品标题数据", category_id);
-//        List<Product> productList = productService.getTitle(
-//                new Product().setProduct_category(new Category().setCategory_id(category_id)),
-//                new PageUtil(0, 40)
-//        );
-//        List<List<Product>> complexProductList = new ArrayList<>(8);
-//        List<Product> products = new ArrayList<>(5);
-//        for (int i = 0; i < productList.size(); i++) {
-//            //如果临时集合中产品数达到5个，加入到产品二维集合中，并重新实例化临时集合
-//            if (i % 5 == 0) {
-//                complexProductList.add(products);
-//                products = new ArrayList<>(5);
-//            }
-//            products.add(productList.get(i));
-//        }
-//        complexProductList.add(products);
-//        Category category = new Category().setCategory_id(category_id).setComplexProductList(complexProductList);
-//        object.put("success", true);
-//        object.put("category", category);
-//        return object.toJSONString();
-//    }
-//
+    /**
+     * 获取主页分类下产品信息
+     * @param category_id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "product/nav/{category_id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getProductByNav(@PathVariable("category_id") Integer category_id) {
+        JSONObject object = new JSONObject();
+        if (category_id == null) {
+            object.put("success", false);
+            return object.toJSONString();
+        }
+        logger.info("获取分类ID为{}的产品品牌", category_id);
+        List<Product> productList = productService.getBrand(
+                new Product().setProduct_category(new Category().setCategory_id(category_id)),
+                new PageUtil(0, 40)
+        );
 
+        List<List<Product>> complexProductList = new ArrayList<>(8);
+        List<Product> products = new ArrayList<>(5);
+        for (int i = 0; i < productList.size(); i++) {
+            //如果临时集合中产品数达到5个，加入到产品二维集合中，并重新实例化临时集合
+            if (i % 5 == 0) {
+                complexProductList.add(products);
+                products = new ArrayList<>(5);
+            }
+            products.add(productList.get(i));
+        }
+        complexProductList.add(products);
+        Category category = new Category().setCategory_id(category_id).setComplexProductList(complexProductList);
+        object.put("success", true);
+        object.put("category", category);
+        return object.toJSONString();
+    }
 }

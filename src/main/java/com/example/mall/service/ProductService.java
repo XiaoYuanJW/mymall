@@ -32,6 +32,14 @@ public interface ProductService {
     List<Product> getList(Product product, Byte[] product_isEnabled_array, OrderUtil orderUtil, PageUtil pageUtil);
 
     /**
+     * 获取商品品牌
+     * @param product
+     * @param pageUtil
+     * @return
+     */
+    List<Product> getBrand(Product product, PageUtil pageUtil);
+
+    /**
      * 通过id搜索商品
      * @param product_Id
      * @return

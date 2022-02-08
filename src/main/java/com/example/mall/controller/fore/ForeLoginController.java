@@ -22,8 +22,11 @@ public class ForeLoginController extends BaseController {
     @Resource(name = "userService")
     private UserService userService;
 
-    /*
-    转到前台天猫-登录页
+    /**
+     * 转到前台-登录页
+     * @param session
+     * @param map
+     * @return
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String goToPage(HttpSession session, Map<String, Object> map) {
@@ -31,15 +34,20 @@ public class ForeLoginController extends BaseController {
         return "fore/loginPage";
     }
 
-    /*
-    登陆验证
+
+    /**
+     * 登录验证
+     * @param session
+     * @param username
+     * @param password
+     * @return
      */
     @ResponseBody
     @RequestMapping(value = "login/doLogin", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
         logger.info("用户验证登录");
         User user = userService.login(username, password);
-
+        System.out.println(user);
         JSONObject jsonObject = new JSONObject();
         if (user == null) {
             logger.info("登录验证失败");
@@ -52,8 +60,10 @@ public class ForeLoginController extends BaseController {
         return jsonObject.toJSONString();
     }
 
-    /*
-    退出当前账号
+    /**
+     * 退出当前账号
+     * @param session
+     * @return
      */
     @RequestMapping(value = "login/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {

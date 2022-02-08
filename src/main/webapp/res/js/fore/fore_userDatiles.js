@@ -1,85 +1,28 @@
 $(function () {
-    //刷新下拉框
-    $('#select_user_address_province').selectpicker('refresh');
-    $('#select_user_address_city').selectpicker('refresh');
-    $('#select_user_address_district').selectpicker('refresh');
-    //改变订单信息时
-    $('#select_user_address_province').change(function () {
-        $.ajax({
-            type: "GET",
-            url: "/tmall/address/" + $(this).val(),
-            data: null,
-            dataType: "json",
-            success: function (data) {
-                $(".loader").hide();
-                if (data.success) {
-                    $("#select_user_address_city").empty();
-                    $("#select_user_address_district").empty();
-                    for (var i = 0; i < data.addressList.length; i++) {
-                        var address_id = data.addressList[i].address_areaId;
-                        var address_name = data.addressList[i].address_name;
-                        $("#select_user_address_city").append("<option value='" + address_id + "'>" + address_name + "</option>")
-                    }
-                    for (var j = 0; j < data.childAddressList.length; j++) {
-                        var childAddress_id = data.childAddressList[j].address_areaId;
-                        var childAddress_name = data.childAddressList[j].address_name;
-                        $("#select_user_address_district").append("<option value='" + childAddress_id + "'>" + childAddress_name + "</option>")
-                    }
-                    $('#select_user_address_city').selectpicker('refresh');
-                    $("#select_user_address_district").selectpicker('refresh');
-                    $("span.address-province").text($("#select_user_address_province").find("option:selected").text());
-                    $("span.address-city").text($("#select_user_address_city").find("option:selected").text());
-                    $("span.address_district").text($("#select_user_address_district").find("option:selected").text());
-                } else {
-                    alert("加载地区信息失败，请刷新页面再试！")
-                }
-            },
-            beforeSend: function () {
-                $(".loader").show();
-            },
-            error: function () {
-                alert("加载地区信息失败，请刷新页面再试！")
-            }
-        });
-    });
-    $("#select_user_address_city").change(function () {
-        $.ajax({
-            type: "GET",
-            url: "/tmall/address/" + $(this).val(),
-            data: null,
-            dataType: "json",
-            success: function (data) {
-                $(".loader").hide();
-                if (data.success) {
-                    $("#select_user_address_district").empty();
-                    for (var i = 0; i < data.addressList.length; i++) {
-                        var address_id = data.addressList[i].address_areaId;
-                        var address_name = data.addressList[i].address_name;
-                        $("#select_user_address_district").append("<option value='" + address_id + "'>" + address_name + "</option>")
-                    }
-                    $('#select_user_address_district').selectpicker('refresh');
-                    $("span.address-city").text($("#select_user_address_city").find("option:selected").text());
-                    $("span.address_district").text($("#select_user_address_district").find("option:selected").text());
-                } else {
-                    alert("加载地区信息失败，请刷新页面再试！")
-                }
-            },
-            beforeSend: function () {
-                $(".loader").show();
-            },
-            error: function () {
-                alert("加载地区信息失败，请刷新页面再试！")
-            }
-        });
-    });
-    $("#select_user_address_district").change(function () {
-        $("span.address_district").text($(this).find("option:selected").text());
-    });
-
     //用户名input获取光标
     $("#user_name").focus(function () {
         $(this).css("border", "1px solid #3879D9")
             .next().text("请输入用户名").css("display", "inline-block").css("color", "#00A0E9");
+    });
+    //昵称input获取光标
+    $("#user_nickname").focus(function () {
+        $(this).css("border", "1px solid #3879D9")
+            .next().text("请输入昵称").css("display", "inline-block").css("color", "#00A0E9");
+    });
+    //电话input获取光标
+    $("#user_phone").focus(function () {
+        $(this).css("border", "1px solid #3879D9")
+            .next().text("请输入电话").css("display", "inline-block").css("color", "#00A0E9");
+    });
+    //邮件input获取光标
+    $("#user_email").focus(function () {
+        $(this).css("border", "1px solid #3879D9")
+            .next().text("请输入邮件").css("display", "inline-block").css("color", "#00A0E9");
+    });
+    //个性签名input获取光标
+    $("#user_sign").focus(function () {
+        $(this).css("border", "1px solid #3879D9")
+            .next().text("请输入个性签名").css("display", "inline-block").css("color", "#00A0E9");
     });
     //密码input获取光标
     $("#user_password").focus(function () {
@@ -91,20 +34,15 @@ $(function () {
         $(this).css("border", "1px solid #3879D9")
             .next().text("请再次输入密码").css("display", "inline-block").css("color", "#00A0E9");
     });
-    //昵称input获取光标
-    $("#user_nickname").focus(function () {
-        $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入昵称").css("display", "inline-block").css("color", "#00A0E9");
-    });
     //出生日期input获取光标
     $("#user_birthday").focus(function () {
         $(this).css("border", "1px solid #3879D9")
             .next().text("请输入出生日期").css("display", "inline-block").css("color", "#00A0E9");
     });
-    //真实姓名input获取光标
-    $("#user_realname").focus(function () {
+    //地址input光标
+    $("#user_address").focus(function () {
         $(this).css("border", "1px solid #3879D9")
-            .next().text("请输入真实姓名").css("display", "inline-block").css("color", "#00A0E9");
+            .next().text("请输入地址").css("display", "inline-block").css("color", "#00A0E9");
     });
 
     //input离开光标
@@ -115,24 +53,38 @@ $(function () {
 
     //非空验证
     $("#register_sub").click(function () {
-        //真实姓名
-        var user_realname = $.trim($("input[name=user_realname]").val());
+        //昵称
+        var user_nickname = $.trim($("input[name=user_nickname]").val());
+        //电话
+        var user_phone = $.trim($("input[name=user_phone]").val());
+        //邮件
+        var user_email = $.trim($("input[name=user_email]").val());
+        //个性签名
+        var user_sign = $.trim($("input[name=user_sign]").val());
         //密码
         var user_password = $.trim($("input[name=user_password]").val());
         //确认密码
         var user_password_one = $.trim($("input[name=user_password_one]").val());
-        //昵称
-        var user_nickname = $.trim($("input[name=user_nickname]").val());
         //出生日期
         var user_birthday = $.trim($("input[name=user_birthday]").val());
+        //地址
+        var user_address = $.trim($("input[name=user_address]").val());
 
         //验证密码的格式 包含数字和英文字母
         var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
-        if (user_realname == null || user_realname === "") {
-            $("#user_realname").css("border", "1px solid red")
-                .next().text("请输入真实姓名").css("display", "inline-block").css("color", "red");
+        if (user_nickname == null || user_nickname === "") {
+            $("#user_nickname").css("border", "1px solid red")
+                .next().text("请输入昵称").css("display", "inline-block").css("color", "red");
             return false;
-        } else if (user_password == null || user_password === "") {
+        } else if (user_phone == null || user_phone === "") {
+            $("#user_phone").css("border", "1px solid red")
+                .next().text("请输入电话").css("display", "inline-block").css("color", "red");
+            return false;
+        }else if (user_email == null || user_email === "") {
+            $("#user_email").css("border", "1px solid red")
+                .next().text("请输入邮件").css("display", "inline-block").css("color", "red");
+            return false;
+        }else if (user_password == null || user_password === "") {
             $("#user_password").css("border", "1px solid red")
                 .next().text("请输入密码").css("display", "inline-block").css("color", "red");
             return false;
@@ -148,10 +100,6 @@ $(function () {
             $("#user_password_one").css("border", "1px solid red")
                 .next().text("两次输入密码不相同").css("display", "inline-block").css("color", "red");
             return false;
-        } else if (user_nickname == null || user_nickname === "") {
-            $("#user_nickname").css("border", "1px solid red")
-                .next().text("请输入昵称").css("display", "inline-block").css("color", "red");
-            return false;
         } else if (user_birthday == null || user_birthday === "") {
             $("#user_birthday").css("border", "1px solid red")
                 .next().text("请选择出生日期").css("display", "inline-block").css("color", "red");
@@ -160,6 +108,7 @@ $(function () {
         return true;
     });
 });
+
 
 //图片上传
 function uploadImage(fileDom) {
@@ -192,7 +141,7 @@ function uploadImage(fileDom) {
         success: function (data) {
             if (data.success) {
                 $(fileDom).prev("img").attr("src","/tmall/res/images/item/userProfilePicture/"+data.fileName);
-                $("#user_profile_picture_src_value").val(data.fileName);
+                $("#user_icon_value").val(data.fileName);
             } else {
                 alert("图片上传异常！");
             }

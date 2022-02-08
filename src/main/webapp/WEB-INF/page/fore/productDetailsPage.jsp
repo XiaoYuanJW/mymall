@@ -4,7 +4,7 @@
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_login.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_productDetails.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_productDetails.css" rel="stylesheet">
-    <title>${requestScope.product.product_name}-tmall.com天猫</title>
+    <title>${requestScope.product.product_name}-校园超市</title>
 </head>
 <body>
 <nav>
@@ -12,16 +12,16 @@
     <div class="header">
         <a href="${pageContext.request.contextPath}"><img
                 src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoB.png"></a>
-        <span class="shopNameHeader">贤趣${requestScope.product.product_category.category_name}官方旗舰店</span>
+        <span class="shopNameHeader">校园${requestScope.product.product_category.category_name}店</span>
         <input id="tid" type="hidden" value="${requestScope.product.product_category.category_id}"/>
         <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/detailsHeaderA.png"
              class="shopAssessHeader">
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                            maxlength="50">
-                    <input type="submit" value="搜天猫" class="searchTmall">
+                    <input type="submit" value="搜校园超市" class="searchTmall">
                 </div>
                 <input type="submit" value="搜本店" class="searchShop">
             </form>
@@ -83,8 +83,8 @@
             </div>
             <div class="qrcodeFooter">
                 <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/scan_icon2.png">
-                <p>打开 <a href="https://www.tmall.com/wow/portal/act/app-download">手机天猫</a> | <a
-                        href="https://www.taobao.com/m">手机淘宝</a>扫一扫登录</p>
+                <p>打开 <a href="#">手机校园超市</a>
+                    </a>扫一扫登录</p>
             </div>
             <div class="loginLinks">
                 <a href="JavaScript:void(0)" id="pwdLogin">密码登录</a>
@@ -118,12 +118,12 @@
     <div class="context_info">
         <div class="context_info_name_div">
             <p class="context_info_name">${requestScope.product.product_name}</p>
-            <span class="context_info_title">${requestScope.product.product_title}</span>
+            <span class="context_info_brand">${requestScope.product.product_brand}</span>
         </div>
         <div class="context_info_main">
             <div class="context_info_main_ad">
                 <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/context_ad.png">
-                <span>全天猫实物商品通用</span>
+                <span>全校园超市实物商品通用</span>
                 <a href="#">去刮券<img
                         src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallItemContentB.png"></a>
             </div>
@@ -141,7 +141,7 @@
                     test="${requestScope.product.product_sale_count != null}">${requestScope.product.product_sale_count}</c:when><c:otherwise>0</c:otherwise></c:choose></span>
             </li>
             <li>累计评价<span>${requestScope.product.product_review_count}</span></li>
-            <li class="tmall_points">送天猫积分<span><fmt:formatNumber type="number"
+            <li class="tmall_points">送积分<span><fmt:formatNumber type="number"
                                                                   value="${requestScope.product.product_sale_price/10}"
                                                                   maxFractionDigits="0"/></span></li>
         </ul>
@@ -157,7 +157,7 @@
                          class="amount_value-down">
                 </span>
                 <span class="amount_unit">件</span>
-                <em>库存1000件</em>
+                <em>库存<span>${requestScope.product.product_inventory}</span>件</em>
             </dd>
         </dl>
         <div class="context_buy">
@@ -240,7 +240,7 @@
     <div class="context_ul">
         <div class="context_ul_head">
             <s></s>
-            <span>看了又看</span>
+            <span>拆你喜欢</span>
         </div>
         <div class="context_ul_goodsList">
             <ul>

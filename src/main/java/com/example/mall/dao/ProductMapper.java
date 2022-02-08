@@ -35,6 +35,14 @@ public interface ProductMapper {
     List<Product> select(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
 
     /**
+     * 获取商品品牌
+     * @param product
+     * @param pageUtil
+     * @return
+     */
+    List<Product> selectBrand(@Param("product") Product product, @Param("pageUtil") PageUtil pageUtil);
+
+    /**
      * 通过id搜索商品
      * @param product_Id
      * @return

@@ -31,7 +31,7 @@
         #{user.user_sign},
         #{user.user_gender},
         #{user.user_birthday},
-        #{user.user_address}
+        #{user.user_address},
         #{user.user_create_time})
     </insert>
     <!--修改用户接口-->

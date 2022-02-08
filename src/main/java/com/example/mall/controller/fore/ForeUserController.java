@@ -29,7 +29,10 @@ public class ForeUserController extends BaseController {
     @Resource(name="userService")
     private UserService userService;
 
-    //转到前台天猫-用户详情页
+
+    /**
+     * 转到前台天猫-用户详情页
+     */
     @RequestMapping(value = "userDetails", method = RequestMethod.GET)
     public String goToUserDetail(HttpSession session, Map<String,Object> map){
         logger.info("检查用户是否登录");
@@ -43,7 +46,13 @@ public class ForeUserController extends BaseController {
             return "redirect:/login";
         }
     }
-    //前台天猫-用户更换头像
+
+    /**
+     * 前台-用户更换头像
+     * @param file
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "user/uploadUserHeadImage", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     public  String uploadUserHeadImage(@RequestParam MultipartFile file, HttpSession session
@@ -68,13 +77,30 @@ public class ForeUserController extends BaseController {
         }
         return jsonObject.toJSONString();
     }
-    //前台天猫-用户详情更新
+
+    /**
+     * 前台-用户详情更新
+     * @param session
+     * @param map
+     * @param user_nickname
+     * @param user_phone
+     * @param user_email
+     * @param user_gender
+     * @param user_birthday
+     * @param user_address
+     * @param user_icon
+     * @param user_password
+     * @return
+     * @throws ParseException
+     * @throws UnsupportedEncodingException
+     */
     @RequestMapping(value="user/update",method=RequestMethod.POST,produces ="application/json;charset=utf-8")
     public String userUpdate(HttpSession session, Map<String,Object> map,
                              @RequestParam(value = "user_nickname") String user_nickname  /*用户昵称 */,
                              @RequestParam(value = "user_phone") String user_phone  /*用户电话*/,
                              @RequestParam(value = "user_email") String user_email  /*用户邮件*/,
                              @RequestParam(value = "user_gender") String user_gender  /*用户性别*/,
+                             @RequestParam(value = "user_sign") String user_sign /*用户签名*/,
                              @RequestParam(value = "user_birthday") String user_birthday /*用户生日*/,
                              @RequestParam(value = "user_address") String user_address  /*用户所在地 */,
                              @RequestParam(value = "user_icon", required = false) String user_icon /* 用户头像*/,
@@ -99,6 +125,7 @@ public class ForeUserController extends BaseController {
                 .setUser_phone(user_phone)
                 .setUser_email(user_email)
                 .setUser_gender(Byte.valueOf(user_gender))
+                .setUser_sign(user_sign)
                 .setUser_birthday(new SimpleDateFormat("yyyy-MM-dd").parse(user_birthday))
                 .setUser_address(user_address)
                 .setUser_icon(user_icon)

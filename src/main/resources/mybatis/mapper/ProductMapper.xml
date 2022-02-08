@@ -102,6 +102,29 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
+    <!--获取商品品牌-->
+    <select id="selectBrand" resultType="product">
+        SELECT product_id,product_brand FROM product
+        <where>
+            <if test="product != null">
+                <if test="product.product_name != null">product_name LIKE concat('%',#{product.product_name},'%')</if>
+                <if test="product.product_price != null">and product_sale_price &lt;= #{product.product_price}</if>
+                <if test="product.product_sale_price != null">and product_sale_price &gt;=
+                    #{product.product_sale_price}
+                </if>
+                <if test="product.product_category != null">
+                    <if test="product.product_category.category_id != null">and product_category_id =
+                        #{product.product_category.category_id}
+                    </if>
+                </if>
+            </if>
+            and product_isEnabled != 1
+        </where>
+        ORDER BY product_id desc
+        <if test="pageUtil != null">
+            LIMIT #{pageUtil.pageStart},#{pageUtil.count}
+        </if>
+    </select>
     <!--根据id搜索产品-->
     <select id="selectOne" resultMap="productMap" parameterType="int">
         SELECT

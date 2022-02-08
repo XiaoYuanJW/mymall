@@ -4,7 +4,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_userDatiles.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_userDatiles.css" rel="stylesheet">
-    <title> mall.com - 个人中心</title>
+    <title>校园超市 - 个人中心</title>
     <style rel="stylesheet">
         #baseNavigator {
             padding: 22px 0;
@@ -96,7 +96,7 @@
                 <div class="form-item">
                     <label class="form-label tsl">个性签名：</label>
                     <input name="user_sign" value="${requestScope.user.user_sign}" id="user_sign"
-                           class="form-text err-input" maxlength="40">
+                           class="form-text err-input" maxlength="20">
                     <span class="form_span"></span>
                 </div>
                 <div class="form-item">
@@ -129,11 +129,12 @@
                 <div class="form-item">
                     <label class="form-label tsl">地址：</label>
                     <input name="user_address" value="${requestScope.user.user_address}" id="user_address"
-                           class="form-text err-input" maxlength="20">
+                           class="form-text err-input" maxlength="40">
                     <span class="form_span"></span>
                 </div>
                 <div class="form-item">
                     <input type="submit" id="register_sub" class="btns btn-large tsl" value="提 交"/>
+                    <input type="button" class="btns btn-large tsl" onclick="window.location.href='${pageContext.request.contextPath}'" value="退 出"/>
                 </div>
             </form>
         </div>
@@ -142,4 +143,6 @@
 <%@include file="include/footer.jsp" %>
 <link href="${pageContext.request.contextPath}/res/css/fore/fore_foot_special.css" rel="stylesheet"/>
 </body>
+
+
 

@@ -255,6 +255,18 @@ input[type=radio] {
    cursor: pointer;
     z-index: 999;
 }
+#user_icon{
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    right: 100px;
+    opacity: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 999;
+}
 
 .radio_value {
     position: relative;

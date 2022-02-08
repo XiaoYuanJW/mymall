@@ -37,6 +37,10 @@ public class Product {
     private List<ProductImage> singleProductImageList;
     /*产品详细图片集合*/
     private List<ProductImage> detailProductImageList;
+    /*产品评论集合*/
+    private List<Review> reviewList;
+    /*产品订单项集合*/
+    private List<OrderItem> orderItemList;
 
     @Override
     public String toString() {
@@ -55,6 +59,8 @@ public class Product {
                 ", product_review_count=" + product_review_count +
                 ", singleProductImageList=" + singleProductImageList +
                 ", detailProductImageList=" + detailProductImageList +
+                ", reviewList=" + reviewList +
+                ", orderItemList=" + orderItemList +
                 '}';
     }
 
@@ -206,6 +212,24 @@ public class Product {
 
     public Product setDetailProductImageList(List<ProductImage> detailProductImageList) {
         this.detailProductImageList = detailProductImageList;
+        return this;
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public Product setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
+        return this;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public Product setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
         return this;
     }
 }

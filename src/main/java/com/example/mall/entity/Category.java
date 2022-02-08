@@ -14,7 +14,8 @@ public class Category {
     private String category_image_src;
     /*产品集合*/
     private List<Product> productList;
-
+    /*产品二维集合*/
+    private List<List<Product>> complexProductList;
     @Override
     public String toString() {
         return "Category{" +
@@ -67,6 +68,15 @@ public class Category {
 
     public Category setProductList(List<Product> productList) {
         this.productList = productList;
+        return this;
+    }
+
+    public List<List<Product>> getComplexProductList() {
+        return complexProductList;
+    }
+
+    public Category setComplexProductList(List<List<Product>> complexProductList) {
+        this.complexProductList = complexProductList;
         return this;
     }
 }
