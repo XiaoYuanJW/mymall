@@ -25,17 +25,14 @@
         null,
         #{orderItem.orderItem_number},
         #{orderItem.orderItem_price},
-        #{orderItem.orderItem_product_id},
-        #{orderItem.orderItem_order_id},
-        #{orderItem.orderItem_user_id})
+        #{orderItem.orderItem_product.product_id},
+        #{orderItem.orderItem_order.order_id},
+        #{orderItem.orderItem_user.user_id})
     </insert>
     <!--更新订单项-->
     <update id="updateOne" parameterType="orderItem">
         UPDATE orderItem
         <set>
-            <if test="orderItem.orderItem_number != null">
-                orderItem_number = #{orderItem.orderItem_number},
-            </if>
             <if test="orderItem.orderItem_price != null">
                 orderItem_price = #{orderItem.orderItem_price},
             </if>

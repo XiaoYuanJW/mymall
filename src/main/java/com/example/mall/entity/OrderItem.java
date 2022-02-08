@@ -7,7 +7,7 @@ public class OrderItem {
     /*订单项ID*/
     private Integer orderItem_id;
     /*订单项产品数量*/
-    private Integer orderItem_number;
+    private Short orderItem_number;
     /*订单项产品总价格*/
     private Double orderItem_price;
     /*订单项对应产品*/
@@ -21,20 +21,21 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "ProductOrderItem{" +
+        return "OrderItem{" +
                 "orderItem_id=" + orderItem_id +
                 ", orderItem_number=" + orderItem_number +
                 ", orderItem_price=" + orderItem_price +
                 ", orderItem_product=" + orderItem_product +
                 ", orderItem_order=" + orderItem_order +
                 ", orderItem_user=" + orderItem_user +
+                ", isReview=" + isReview +
                 '}';
     }
 
     public OrderItem() {
     }
 
-    public OrderItem(Integer orderItem_id, Integer orderItem_number, Double orderItem_price, Product orderItem_product, Order orderItem_order, User orderItem_user) {
+    public OrderItem(Integer orderItem_id, Short orderItem_number, Double orderItem_price, Product orderItem_product, Order orderItem_order, User orderItem_user) {
         this.orderItem_id = orderItem_id;
         this.orderItem_number = orderItem_number;
         this.orderItem_price = orderItem_price;
@@ -52,11 +53,11 @@ public class OrderItem {
         return this;
     }
 
-    public Integer getOrderItem_number() {
+    public Short getOrderItem_number() {
         return orderItem_number;
     }
 
-    public OrderItem setOrderItem_number(Integer orderItem_number) {
+    public OrderItem setOrderItem_number(Short orderItem_number) {
         this.orderItem_number = orderItem_number;
         return this;
     }
@@ -94,6 +95,15 @@ public class OrderItem {
 
     public OrderItem setOrderItem_user(User orderItem_user) {
         this.orderItem_user = orderItem_user;
+        return this;
+    }
+
+    public Boolean getIsReview() {
+        return isReview;
+    }
+
+    public OrderItem setIsReview(Boolean review) {
+        isReview = review;
         return this;
     }
 }

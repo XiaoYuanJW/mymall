@@ -3,14 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_productBuy.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_productBuyPage.css" rel="stylesheet"/>
-    <title>确认订单 - Tmall.com天猫-理想生活上天猫</title>
-    <script>
-        $(function () {
-            $("span.address_province").text($("#select_order_address_province").find("option:selected").text());
-            $("span.address_city").text($("#select_order_address_city").find("option:selected").text());
-            $("span.address_district").text($("#select_order_address_district").find("option:selected").text());
-        })
-    </script>
+    <title>确认订单 - 校园超市-理想生活上校园超市</title>
 </head>
 <body>
 <nav>
@@ -48,31 +41,11 @@
 <div class="content">
     <div class="order_address">
         <h2>输入收货地址</h2>
-        <label for="select_order_address_province">所在地区</label><span class="mustValue">*</span>
-        <select class="selectpicker" id="select_order_address_province" data-size="8" data-live-search="true">
-            <c:forEach items="${requestScope.addressList}" var="address" varStatus="i">
-                <option value="${address.address_areaId}"
-                        <c:if test="${requestScope.addressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-            </c:forEach>
-        </select>
-        <select class="selectpicker" id="select_order_address_city" data-size="8" data-live-search="true">
-            <c:forEach items="${requestScope.cityList}" var="address" varStatus="i">
-                <option value="${address.address_areaId}"
-                        <c:if test="${requestScope.cityAddressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-            </c:forEach>
-        </select>
-        <select class="selectpicker" id="select_order_address_district" data-size="8" data-live-search="true">
-            <c:forEach items="${requestScope.districtList}" var="address" varStatus="i">
-                <option value="${address.address_areaId}"
-                        <c:if test="${requestScope.districtAddressId==address.address_areaId}">selected</c:if>>${address.address_name}</option>
-            </c:forEach>
-        </select>
+        <label for="textarea_address" id="label_address">地址</label><span class="mustValue">*</span>
+        <textarea id="textarea_address">${requestScope.order_address}</textarea>
         <div class="br"></div>
         <label for="textarea_details_address" id="label_details_address">详细地址</label><span class="mustValue">*</span>
         <textarea id="textarea_details_address">${requestScope.detailsAddress}</textarea>
-        <div class="br"></div>
-        <label for="input_order_post" style="min-width: 80px;" id="label_order_post">邮政编码</label><span></span>
-        <input id="input_order_post" type="text" value="${requestScope.order_post}" maxlength="6"/>
         <div class="br"></div>
         <label for="input_order_receiver" id="label_order_receiver">收货人姓名</label><span class="mustValue">*</span>
         <input id="input_order_receiver" type="text" value="${requestScope.order_receiver}" maxlength="20"/>
@@ -95,7 +68,7 @@
             <c:forEach items="${requestScope.orderItemList}" var="orderItem" varStatus="i">
                 <tr class="tr_shop">
                     <td><span class="span_shopTitle">店铺：</span><span
-                            class="span_shopName">贤趣${orderItem.productOrderItem_product.product_category.category_name}旗舰店</span>
+                            class="span_shopName">校园${orderItem.orderItem_product.product_category.category_name}旗舰店</span>
                     </td>
                     <td></td>
                     <td></td>
@@ -103,31 +76,20 @@
                 </tr>
                 <tr class="tr_product_info">
                     <td><img
-                            src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.productOrderItem_product.singleProductImageList[0].productImage_src}"
+                            src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.orderItem_product.singleProductImageList[0].productImage_src}"
                             style="width: 50px;height: 50px;"/><span class="span_product_name"><a
-                            href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}">${orderItem.productOrderItem_product.product_name}</a></span>
+                            href="${pageContext.request.contextPath}/product/${orderItem.orderItem_product.product_id}">${orderItem.orderItem_product.product_name}</a></span>
                     </td>
                     <td><span
-                            class="span_product_sale_price">${orderItem.productOrderItem_product.product_sale_price}0</span>
+                            class="span_product_sale_price">${orderItem.orderItem_product.product_sale_price}0</span>
                     </td>
-                    <td><span class="span_productOrderItem_number">${orderItem.productOrderItem_number}</span></td>
-                    <td><span class="span_productOrderItem_price">${orderItem.productOrderItem_price}0</span></td>
-                </tr>
-                <tr class="tr_userMessage">
-                    <td><label for="input_userMessage_${i.count}">给卖家留言：</label><textarea maxlength="500"
-                                                                                          id="input_userMessage_${i.count}"
-                                                                                          placeholder="选填:填写内容已和卖家协商确认"
-                                                                                          class="input_userMessage"></textarea>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td colspan="4"><input type="hidden" class="input_orderItem_id"
-                                           value="${orderItem.productOrderItem_id}"/>
+                    <td><span class="span_orderItem_number">${orderItem.orderItem_number}</span></td>
+                    <td><span class="span_orderItem_price">${orderItem.orderItem_price}0</span></td>
                 </tr>
                 <tr class="tr_orderCount">
                     <td colspan="3"></td>
                     <td><span class="span_price_name">店铺合计(含运费)</span><span
-                            class="span_price_value">￥${orderItem.productOrderItem_price}0</span></td>
+                            class="span_price_value">￥${orderItem.orderItem_price}0</span></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -155,36 +117,28 @@
     </div>
     <script>
         function payOne() {
-            var addressId = $("#select_order_address_province").val();
-            var cityAddressId = $("#select_order_address_city").val();
-            var districtAddressId = $("#select_order_address_district").val();
-            var productOrder_detail_address = $.trim($("#textarea_details_address").val());
-            var productOrder_post = $.trim($("#input_order_post").val());
-            var productOrder_receiver = $.trim($("#input_order_receiver").val());
-            var productOrder_mobile = $.trim($("#input_order_phone").val());
-            var userMessage = $.trim($("#input_userMessage_1").val());
-            var orderItem_product_id = parseInt('${requestScope.orderItemList[0].productOrderItem_product.product_id}');
-            var orderItem_number = parseInt('${requestScope.orderItemList[0].productOrderItem_number}');
+            var order_address = $("#textarea_address").val();
+            var order_detail_address = $.trim($("#textarea_details_address").val());
+            var order_receiver = $.trim($("#input_order_receiver").val());
+            var order_phone = $.trim($("#input_order_phone").val());
+            var orderItem_product_id = parseInt('${requestScope.orderItemList[0].orderItem_product.product_id}');
+            var orderItem_number = parseInt('${requestScope.orderItemList[0].orderItem_number}');
 
             var yn = true;
-            if (productOrder_detail_address === "") {
+            if (order_detail_address === "") {
                 styleUtil.specialBasicErrorShow($("#label_details_address"));
                 yn = false;
             }
-            if (productOrder_receiver === "") {
+            if (order_receiver === "") {
                 styleUtil.specialBasicErrorShow($("#label_order_receiver"));
                 yn = false;
             }
             var re = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-            if (!re.test(productOrder_mobile)) {
+            if (!re.test(order_phone)) {
                 styleUtil.specialBasicErrorShow($("#label_order_phone"));
                 yn = false;
             }
             re = /^[1-9][0-9]{5}$/;
-            if (!re.test(productOrder_post) && productOrder_post !== "") {
-                styleUtil.specialBasicErrorShow($("#label_order_post"));
-                yn = false;
-            }
             if (!yn) {
                 window.scrollTo(0, 0);
                 return false;
@@ -193,14 +147,10 @@
                 url: "/tmall/order",
                 type: "POST",
                 data: {
-                    "addressId": addressId,
-                    "cityAddressId": cityAddressId,
-                    "districtAddressId": districtAddressId,
-                    "productOrder_detail_address": productOrder_detail_address,
-                    "productOrder_post": productOrder_post,
-                    "productOrder_receiver": productOrder_receiver,
-                    "productOrder_mobile": productOrder_mobile,
-                    "userMessage": userMessage,
+                    "order_address": order_address,
+                    "order_detail_address": order_detail_address,
+                    "order_receiver": order_receiver,
+                    "order_phone": order_phone,
                     "orderItem_product_id": orderItem_product_id,
                     "orderItem_number": orderItem_number
                 },
@@ -224,39 +174,36 @@
         }
 
         function payList() {
-            var addressId = $("#select_order_address_province").val();
-            var cityAddressId = $("#select_order_address_city").val();
-            var districtAddressId = $("#select_order_address_district").val();
-            var productOrder_detail_address = $.trim($("#textarea_details_address").val());
-            var productOrder_post = $.trim($("#input_order_post").val());
-            var productOrder_receiver = $.trim($("#input_order_receiver").val());
-            var productOrder_mobile = $.trim($("#input_order_phone").val());
+            var order_address = $("#textarea_address").val();
+            var order_detail_address = $.trim($("#textarea_details_address").val());
+            var order_receiver = $.trim($("#input_order_receiver").val());
+            var order_phone = $.trim($("#input_order_phone").val());
+            var orderItem_product_id = parseInt('${requestScope.orderItemList[0].orderItem_product.product_id}');
 
             var yn = true;
-            if (productOrder_detail_address === "") {
+            if (oorder_address === "") {
+                styleUtil.specialBasicErrorShow($("#label_address"));
+                yn = false;
+            }
+            if (order_detail_address === "") {
                 styleUtil.specialBasicErrorShow($("#label_details_address"));
                 yn = false;
             }
-            if (productOrder_receiver === "") {
+            if (order_receiver === "") {
                 styleUtil.specialBasicErrorShow($("#label_order_receiver"));
                 yn = false;
             }
             var re = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-            if (!re.test(productOrder_mobile)) {
+            if (!re.test(order_phone)) {
                 styleUtil.specialBasicErrorShow($("#label_order_phone"));
                 yn = false;
             }
             re = /^[1-9][0-9]{5}$/;
-            if (!re.test(productOrder_post) && productOrder_post !== "") {
-                styleUtil.specialBasicErrorShow($("#label_order_post"));
-                yn = false;
-            }
             if (!yn) {
                 window.scrollTo(0, 0);
                 return false;
             }
             var orderItemMap = {};
-            var tr = $(".tr_userMessage");
             tr.each(function () {
                 var orderItem_id = $(this).find(".input_orderItem_id").val();
                 if (isNaN(orderItem_id) || orderItem_id === "") {
@@ -269,13 +216,10 @@
                 url: "/tmall/order/list",
                 type: "POST",
                 data: {
-                    "addressId": addressId,
-                    "cityAddressId": cityAddressId,
-                    "districtAddressId": districtAddressId,
-                    "productOrder_detail_address": productOrder_detail_address,
-                    "productOrder_post": productOrder_post,
-                    "productOrder_receiver": productOrder_receiver,
-                    "productOrder_mobile": productOrder_mobile,
+                    "order_address":order_address,
+                    "order_detail_address": order_detail_address,
+                    "order_receiver": order_receiver,
+                    "order_phone": order_phone,
                     "orderItemJSON": JSON.stringify(orderItemMap)
                 },
                 traditional: true,
@@ -299,7 +243,7 @@
     </script>
     <div class="order_info_last">
         <c:choose>
-            <c:when test="${requestScope.orderItemList[0].productOrderItem_id != null}">
+            <c:when test="${requestScope.orderItemList[0].orderItem_id != null}">
                 <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payList()">提交订单</a>
             </c:when>
             <c:otherwise>
