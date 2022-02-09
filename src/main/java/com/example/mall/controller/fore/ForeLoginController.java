@@ -47,7 +47,6 @@ public class ForeLoginController extends BaseController {
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
         logger.info("用户验证登录");
         User user = userService.login(username, password);
-        System.out.println(user);
         JSONObject jsonObject = new JSONObject();
         if (user == null) {
             logger.info("登录验证失败");

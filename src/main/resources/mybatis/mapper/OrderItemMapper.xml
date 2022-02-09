@@ -33,14 +33,14 @@
     <update id="updateOne" parameterType="orderItem">
         UPDATE orderItem
         <set>
-            <if test="orderItem.orderItem_price != null">
-                orderItem_price = #{orderItem.orderItem_price},
+            <if test="orderItem.orderItem_order != null">
+                orderItem_order_id = #{orderItem.orderItem_order.order_id},
             </if>
             <if test="orderItem.orderItem_number != null">
                 orderItem_number = #{orderItem.orderItem_number},
             </if>
-            <if test="orderItem.orderItem_order != null">
-                orderItem_order_id = #{orderItem.orderItem_order.order_id}
+            <if test="orderItem.orderItem_price != null">
+                orderItem_price = #{orderItem.orderItem_price}
             </if>
         </set>
         <where>

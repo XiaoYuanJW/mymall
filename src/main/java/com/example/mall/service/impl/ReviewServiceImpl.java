@@ -76,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Integer getTotalByOrderItemId(Integer productOrderItem_id) {
-        return reviewMapper.selectTotalByOrderItemId(productOrderItem_id);
+    public Integer getTotalByOrderItemId(Integer orderItem_id) {
+        return reviewMapper.selectTotalByOrderItemId(orderItem_id);
     }
 }

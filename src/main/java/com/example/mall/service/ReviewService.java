@@ -86,8 +86,8 @@ public interface ReviewService {
 
     /**
      * 订单项评论数量合计
-     * @param productOrderItem_id
+     * @param orderItem_id
      * @return
      */
-    Integer getTotalByOrderItemId(Integer productOrderItem_id);
+    Integer getTotalByOrderItemId(Integer orderItem_id);
 }

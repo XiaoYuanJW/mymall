@@ -86,6 +86,10 @@
                     <td><span class="span_orderItem_number">${orderItem.orderItem_number}</span></td>
                     <td><span class="span_orderItem_price">${orderItem.orderItem_price}0</span></td>
                 </tr>
+                <tr class="tr_userMessage">
+                    <td colspan="4"><input type="hidden" class="input_orderItem_id"
+                                           value="${orderItem.orderItem_id}"/>
+                </tr>
                 <tr class="tr_orderCount">
                     <td colspan="3"></td>
                     <td><span class="span_price_name">店铺合计(含运费)</span><span
@@ -125,6 +129,10 @@
             var orderItem_number = parseInt('${requestScope.orderItemList[0].orderItem_number}');
 
             var yn = true;
+            if (order_address === "") {
+                styleUtil.specialBasicErrorShow($("#label_address"));
+                yn = false;
+            }
             if (order_detail_address === "") {
                 styleUtil.specialBasicErrorShow($("#label_details_address"));
                 yn = false;
@@ -138,7 +146,6 @@
                 styleUtil.specialBasicErrorShow($("#label_order_phone"));
                 yn = false;
             }
-            re = /^[1-9][0-9]{5}$/;
             if (!yn) {
                 window.scrollTo(0, 0);
                 return false;
@@ -174,14 +181,14 @@
         }
 
         function payList() {
+
             var order_address = $("#textarea_address").val();
             var order_detail_address = $.trim($("#textarea_details_address").val());
             var order_receiver = $.trim($("#input_order_receiver").val());
             var order_phone = $.trim($("#input_order_phone").val());
-            var orderItem_product_id = parseInt('${requestScope.orderItemList[0].orderItem_product.product_id}');
 
             var yn = true;
-            if (oorder_address === "") {
+            if (order_address === "") {
                 styleUtil.specialBasicErrorShow($("#label_address"));
                 yn = false;
             }
@@ -198,20 +205,22 @@
                 styleUtil.specialBasicErrorShow($("#label_order_phone"));
                 yn = false;
             }
-            re = /^[1-9][0-9]{5}$/;
             if (!yn) {
                 window.scrollTo(0, 0);
                 return false;
             }
+
             var orderItemMap = {};
+            var tr = $(".tr_userMessage");
             tr.each(function () {
                 var orderItem_id = $(this).find(".input_orderItem_id").val();
                 if (isNaN(orderItem_id) || orderItem_id === "") {
                     location.reload(true);
                     return false;
                 }
-                orderItemMap[orderItem_id] = $(this).find(".input_userMessage").val();
+                orderItemMap[orderItem_id] = null;
             });
+
             $.ajax({
                 url: "/tmall/order/list",
                 type: "POST",

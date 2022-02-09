@@ -56,7 +56,7 @@
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                            maxlength="50">
                     <input type="submit" value="搜 索" class="searchBtn">
                 </div>

@@ -86,8 +86,8 @@ public interface ReviewMapper {
 
     /**
      * 订单项评论数量合计
-     * @param productOrderItem_id
+     * @param orderItem_id
      * @return
      */
-    Integer selectTotalByOrderItemId(@Param("productOrderItem_id") Integer productOrderItem_id);
+    Integer selectTotalByOrderItemId(@Param("orderItem_id") Integer orderItem_id);
 }

@@ -3,7 +3,7 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_productBuyCar.js"></script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_productBuyCarPage.css" rel="stylesheet"/>
-    <title>Tmall.com天猫 - 购物车</title>
+    <title>校园超市 - 购物车</title>
     <script>
         $(function () {
             $('#btn-ok').click(function () {
@@ -50,7 +50,7 @@
         <div class="shopSearchHeader">
             <form action="${pageContext.request.contextPath}/product" method="get">
                 <div class="shopSearchInput">
-                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                    <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                            value="${requestScope.searchValue}" maxlength="50">
                     <input type="submit" value="搜 索" class="searchBtn">
                 </div>
@@ -116,37 +116,37 @@
                 <c:forEach items="${requestScope.orderItemList}" var="orderItem">
                     <tr class="orderItem_category">
                         <td colspan="6"><span class="shop_logo"></span><span
-                                class="category_shop">店铺：贤趣${orderItem.productOrderItem_product.product_category.category_name}旗舰店</span>
+                                class="category_shop">店铺：校园${orderItem.orderItem_product.product_category.category_name}店</span>
                         </td>
                     </tr>
                     <tr class="orderItem_info">
                         <td class="tbody_checkbox"><input type="checkbox" class="cbx_select"
-                                                          id="cbx_orderItem_select_${orderItem.productOrderItem_id}"
+                                                          id="cbx_orderItem_select_${orderItem.orderItem_id}"
                                                           name="orderItem_id"><label
-                                for="cbx_orderItem_select_${orderItem.productOrderItem_id}"></label></td>
+                                for="cbx_orderItem_select_${orderItem.orderItem_id}"></label></td>
                         <td><img class="orderItem_product_image"
-                                 src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.productOrderItem_product.singleProductImageList[0].productImage_src}"
+                                 src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.orderItem_product.singleProductImageList[0].productImage_src}"
                                  style="width: 80px;height: 80px;"/><span class="orderItem_product_name"><a
-                                href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}">${orderItem.productOrderItem_product.product_name}</a></span>
+                                href="${pageContext.request.contextPath}/product/${orderItem.orderItem_product.product_id}">${orderItem.orderItem_product.product_name}</a></span>
                         </td>
                         <td><span
-                                class="orderItem_product_price">￥${orderItem.productOrderItem_price/orderItem.productOrderItem_number}</span>
+                                class="orderItem_product_price">￥${orderItem.orderItem_price/orderItem.orderItem_number}</span>
                         </td>
                         <td>
                             <div class="item_amount">
                                 <a href="javascript:void(0)" onclick="up(this)"
-                                   class="J_Minus <c:if test="${orderItem.productOrderItem_number<=1}">no_minus</c:if>">-</a>
-                                <input type="text" value="${orderItem.productOrderItem_number}"/>
+                                   class="J_Minus <c:if test="${orderItem.orderItem_number<=1}">no_minus</c:if>">-</a>
+                                <input type="text" value="${orderItem.orderItem_number}"/>
                                 <a href="javascript:void(0)" onclick="down(this)" class="J_Plus">+</a>
                             </div>
                         </td>
                         <td>
-                            <span class="orderItem_product_realPrice">￥${orderItem.productOrderItem_price}</span>
+                            <span class="orderItem_product_realPrice">￥${orderItem.orderItem_price}</span>
                         </td>
-                        <td><a href="javascript:void(0)" onclick="removeItem('${orderItem.productOrderItem_id}')"
+                        <td><a href="javascript:void(0)" onclick="removeItem('${orderItem.orderItem_id}')"
                                class="remove_order">删除</a></td>
                         <td>
-                            <input type="hidden" class="input_orderItem" name="${orderItem.productOrderItem_id}"/>
+                            <input type="hidden" class="input_orderItem" name="${orderItem.orderItem_id}"/>
                         </td>
                     </tr>
                 </c:forEach>

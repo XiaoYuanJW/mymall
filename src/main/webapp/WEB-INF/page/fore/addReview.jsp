@@ -2,7 +2,7 @@
 <%@ include file="include/header.jsp" %>
 <head>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_addReview.css" rel="stylesheet"/>
-    <title>添加评论 - Tmall.com天猫-理想生活上天猫</title>
+    <title>添加评论 - 校园超市-理想生活上校园超市</title>
     <script>
         $(function () {
             $("#review_form").submit(function () {
@@ -30,7 +30,7 @@
     <div class="shopSearchHeader">
         <form action="${pageContext.request.contextPath}/product" method="get">
             <div class="shopSearchInput">
-                <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                        maxlength="50">
                 <input type="submit" value="搜 索" class="searchBtn">
             </div>
@@ -40,17 +40,17 @@
 <div class="content">
     <div class="details_box">
         <div class="db-showpanel">
-            <a href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}"
+            <a href="${pageContext.request.contextPath}/product/${orderItem.orderItem_product.product_id}"
                target="_blank"><img
-                    src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.productOrderItem_product.singleProductImageList[0].productImage_src}"></a>
+                    src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.orderItem_product.singleProductImageList[0].productImage_src}"></a>
         </div>
         <div class="db-icbu">
             <ol class="ui-form-bd">
-                <li class="ui-form-row"><h3>${orderItem.productOrderItem_product.product_name}</h3></li>
+                <li class="ui-form-row"><h3>${orderItem.orderItem_product.product_name}</h3></li>
                 <li class="ui-form-row superstar-price">
                     <label class="ui-form-label">价格</label>
                     <div class="ui-form_right">
-                        <em>${orderItem.productOrderItem_product.product_sale_price}</em>
+                        <em>${orderItem.orderItem_product.product_sale_price}</em>
                         <span>元</span>
                     </div>
                 </li>
@@ -65,7 +65,7 @@
                 <div class="tv-lb-head"></div>
                 <div class="tv-lb-content">
                     <span>累计评价</span>
-                    <em class="superstar-ratetotal">${orderItem.productOrderItem_product.product_review_count}</em>
+                    <em class="superstar-ratetotal">${orderItem.orderItem_product.product_review_count}</em>
                 </div>
                 <div class="tv-lb-bottom"></div>
             </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="rate-compose">
             <form method="post" action="${pageContext.request.contextPath}/review" id="review_form">
-                <input type="hidden" class="orderItem_id" value="${orderItem.productOrderItem_id}" name="orderItem_id">
+                <input type="hidden" class="orderItem_id" value="${orderItem.orderItem_id}" name="orderItem_id">
                 <div class="compose-main">
                     <div class="compose-header">
                         <span>其他买家，需要你的建议哦！</span>

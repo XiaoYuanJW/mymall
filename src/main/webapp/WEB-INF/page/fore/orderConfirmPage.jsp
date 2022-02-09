@@ -2,7 +2,7 @@
 <%@ include file="include/header.jsp" %>
 <head>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_orderConfirmPage.css" rel="stylesheet"/>
-    <title>确认收货 - Tmall.com天猫-理想生活上天猫</title>
+    <title>确认收货 - 校园超市-理想生活上校园超市</title>
     <script>
 
     </script>
@@ -19,7 +19,7 @@
     <div class="shopSearchHeader">
         <form action="${pageContext.request.contextPath}/product" method="get">
             <div class="shopSearchInput">
-                <input type="text" class="searchInput" name="product_name" placeholder="搜索 天猫 商品/品牌/店铺"
+                <input type="text" class="searchInput" name="product_name" placeholder="搜索 校园超市 商品/品牌"
                        maxlength="50">
                 <input type="submit" value="搜 索" class="searchBtn">
             </div>
@@ -33,21 +33,21 @@
                 <div class="step-name">拍下商品</div>
                 <div class="step-no_first"></div>
                 <div class="step-time">
-                    <div class="step-time-wraper">${productOrder.productOrder_pay_date}</div>
+                    <div class="step-time-wraper">${order.order_pay_date}</div>
                 </div>
             </li>
             <li class="step-done">
                 <div class="step-name">付款到支付宝</div>
                 <div class="step-no step-no-select"></div>
                 <div class="step-time">
-                    <div class="step-time-wraper">${productOrder.productOrder_pay_date}</div>
+                    <div class="step-time-wraper">${order.order_pay_date}</div>
                 </div>
             </li>
             <li class="step-done">
                 <div class="step-name">卖家发货</div>
                 <div class="step-no step-no-select"></div>
                 <div class="step-time">
-                    <div class="step-time-wraper">${productOrder.productOrder_delivery_date}</div>
+                    <div class="step-time-wraper">${order.order_delivery_date}</div>
                 </div>
             </li>
             <li class="step-no">
@@ -75,20 +75,20 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.productOrder.productOrderItemList}" var="orderItem" varStatus="i">
+            <c:forEach items="${requestScope.order.orderItemList}" var="orderItem" varStatus="i">
                 <tr class="tr_product_info">
                     <td width="500px"><img
-                            src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.productOrderItem_product.singleProductImageList[0].productImage_src}"
+                            src="${pageContext.request.contextPath}/res/images/item/productSinglePicture/${orderItem.orderItem_product.singleProductImageList[0].productImage_src}"
                             style="width: 50px;height: 50px;"/><span class="span_product_name"><a
-                            href="${pageContext.request.contextPath}/product/${orderItem.productOrderItem_product.product_id}"
-                            target="_blank">${orderItem.productOrderItem_product.product_name}</a></span>
+                            href="${pageContext.request.contextPath}/product/${orderItem.orderItem_product.product_id}"
+                            target="_blank">${orderItem.orderItem_product.product_name}</a></span>
                     </td>
                     <td><span
-                            class="span_product_sale_price">${orderItem.productOrderItem_product.product_sale_price}0</span>
+                            class="span_product_sale_price">${orderItem.orderItem_product.product_sale_price}0</span>
                     </td>
-                    <td><span class="span_productOrderItem_number">${orderItem.productOrderItem_number}</span></td>
-                    <td><span class="span_productOrderItem_price"
-                              style="font-weight: bold">${orderItem.productOrderItem_price}0</span></td>
+                    <td><span class="span_orderItem_number">${orderItem.orderItem_number}</span></td>
+                    <td><span class="span_orderItem_price"
+                              style="font-weight: bold">${orderItem.orderItem_price}0</span></td>
                 </tr>
             </c:forEach>
             <tr class="order-ft">
@@ -104,19 +104,19 @@
             <tr>
                 <td colspan="4">
                     <span class="info_label">订单编号：</span>
-                    <span class="info_value">${requestScope.productOrder.productOrder_code}</span>
+                    <span class="info_value">${requestScope.order.order_code}</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <span class="info_label">卖家商铺昵称：</span>
-                    <span class="info_value">贤趣模拟旗舰店</span>
+                    <span class="info_value">校园超市店</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <span class="info_label">成交时间：</span>
-                    <span class="info_value">${requestScope.productOrder.productOrder_pay_date}</span>
+                    <span class="info_value">${requestScope.order.order_pay_date}</span>
                 </td>
             </tr>
             </tbody>
@@ -124,8 +124,8 @@
         <div class="order-dashboard">
             <div class="bd">
                 <ul>
-<%--                    <li>请收到货后，再确认收货！否则您可能钱货两空！</li>--%>
-                    <li>提示：本系统不会进行真实交易，请放心测试</li>
+                    <%--                    <li>请收到货后，再确认收货！否则您可能钱货两空！</li>--%>
+                    <li>提示：模拟支付</li>
                 </ul>
                 <script>
                     function confirmOrder() {
@@ -133,13 +133,13 @@
                         var yn = confirm("点击确认后，您的订单流程即完成，您后续可以进行商品评价和提醒发货。");
                         if (yn) {
                             $.ajax({
-                                url: "/tmall/order/success/${requestScope.productOrder.productOrder_code}",
+                                url: "/tmall/order/success/${requestScope.order.order_code}",
                                 type: "PUT",
                                 data: null,
                                 dataType: "json",
                                 success: function (data) {
                                     if (data.success) {
-                                        location.href = "/tmall/order/success/${requestScope.productOrder.productOrder_code}";
+                                        location.href = "/tmall/order/success/${requestScope.order.order_code}";
                                     } else {
                                         alert("订单确认异常，请稍后再试！");
                                         location.href = "/tmall/order/0/10";
